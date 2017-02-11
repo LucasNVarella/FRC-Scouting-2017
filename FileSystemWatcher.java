@@ -40,7 +40,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class FileSystemWatcher {
+public class FileSystemWatcher 
+{
 	
 	// SQL Database connection object
 	public static Connection conn;
@@ -55,7 +56,8 @@ public class FileSystemWatcher {
 	private static JFrame frame;
 	private static JTextArea console;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException 
+	{
 		
 		// Initiating the UI
 		frame = new JFrame();
@@ -111,17 +113,21 @@ public class FileSystemWatcher {
 				Path filename = ev.context();
 
 				// Verify that the new file is a text file.
-				try {
+				try 
+				{
 					// Resolve the filename against the directory.
 					// This will indicate whether a new file found is a text file.
 					// Checks for extraneous new files in the monitored folder.
 					// Look up resolving file names for more info.
 					Path child = dir.resolve(filename);
-					if (!Files.probeContentType(child).equals("text/plain")) {
+					if (!Files.probeContentType(child).equals("text/plain")) 
+					{
 						String message = String.format("New file '%s'" + " is not a plain text file.%n", filename);
 						output(message);
 					}
-				} catch (IOException x) {
+				} 
+				catch (IOException x) 
+				{
 					System.err.println(x);
 					continue;
 				}
@@ -129,15 +135,46 @@ public class FileSystemWatcher {
 				// The tablets will always send all forms as a single line, to be contained in this string.
 				String content = "";
 				Scanner in = new Scanner(new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString()));
+				String outputToFile = ""; 
+				
+				//Finds USBs mounted 
+				File files[] = File.listRoots();
+				FileSystemView fsv = FileSystemView.getFileSystemView();
+				String outputFilePath; 
+				for (File file:files)
+				{
+					if (fsv.getSystemTypeDescription(file).equals("USB Drive")) outFilePath = file.getPath();
+				}
+				
+				//Creates file and checks if it is modifiable 
+				File outputToUSB = new File(outputFilePath); 
+				outputToUSB.setWritable(writable, true); 
+				if (outputToUSB.exists()) System.out.println("Successfully created file!"); 
+				else System.out.println("Didn't create file successfully."); 
+				if (outputToUSB.canWrite()) System.out.println("Successfully created modifiable file.");
+				else System.out.println("Didn't create modifiable file."); 
 				while (in.hasNext())
 				{
 					content += in.next();
+					//Appends info to an output string, which be added to the output file (which will be put on the USB) 
+					outputToFile += in.next(); 
 				}
+				
+				//Outputs the information to the file 
+				FileWriter outputInfoToUSBFile = new FileWriter(outputToUSB, true); 
+				try 
+				{
+				outputInfoToUSBFile.write(outputToFile); 
+				}
+				catch (IOException ioe) 
+				{
+					System.err.println("IOException: "+ioe); 
+				}
+				
 				// We do not know how many forms will be present in the file.
 				// The next loop will read all of the forms it finds onto this array.
 				ArrayList forms = new ArrayList<String>(); 
 				// A count of all forms present in this file.
-				int i = 0;
 				// flag
 				boolean done = false;
 				while (!done)
@@ -181,7 +218,8 @@ public class FileSystemWatcher {
 						// We now know the number of items we've read.
 						// This means we can get rid of all null elements of the array.
 						ArrayList<String> formItems = (ArrayList<String>) (items.clone());
-						try {
+						try 
+						{
 							storeInDB(formItems);
 							conn.close();
 						} catch (SQLException ev1) 
@@ -299,6 +337,7 @@ public class FileSystemWatcher {
 		}
 		
 	} // End storeInDB
+
 	
 	public static boolean getConnection()
 	{
