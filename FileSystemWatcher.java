@@ -135,7 +135,7 @@ public class FileSystemWatcher {
 				}
 				// We do not know how many forms will be present in the file.
 				// The next loop will read all of the forms it finds onto this array.
-				String contnt[] = new String[150];
+				ArrayList forms = new ArrayList<String>(); 
 				// A count of all forms present in this file.
 				int i = 0;
 				// flag
@@ -146,14 +146,11 @@ public class FileSystemWatcher {
 					int index = content.indexOf("||");
 					if (index == -1) done = true;
 					else {
-						contnt[i] = content.substring(0, index);
+						forms.add(content.substring(0, index)); 
 						content = content.substring(index+2);
 					}
-					i++;
 				}
 				// We now know the number of forms we've read.
-				// This means we can get rid of all null elements of the array.
-				String forms[] = Arrays.copyOf(contnt, i-1);
 				// Now we will iterate through each item in each form
 				for (String form : forms)
 				{
@@ -267,7 +264,7 @@ public class FileSystemWatcher {
 		    } 
 		    finally 
 		    {
-		        if (stmt != null) { stmt.close(); }
+		        if (stmt != null)  stmt.close(); 
 		    }
 		    int id = 0;
 		    String val = "";
