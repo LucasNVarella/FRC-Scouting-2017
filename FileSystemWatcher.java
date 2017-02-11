@@ -19,6 +19,7 @@
  * The text file must follow a specific format dictated by the tablet software.
  *************************************************************************************************/
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -32,6 +33,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -42,6 +44,9 @@ public class FileSystemWatcher {
 	
 	// SQL Database connection object
 	public static Connection conn;
+	final int MATCH_NUM_INDEX = 4; 
+	final int TEAM_NUM_INDEX = 2; 
+	final int TABLET_NUM_INDEX = 0; 
 	
 	// The current string to display in the JFrame
 	private static String dispString = "";
@@ -83,7 +88,7 @@ public class FileSystemWatcher {
 			
 			WatchService watcher = FileSystems.getDefault().newWatchService();
 			// The main folder where changes will be monitored.
-			Path dir = Paths.get("E:/Users/" + System.getProperty("user.name") + "/Desktop/Shortcutz");
+			Path dir = new File(System.getProperty("user.home"), "Desktop").toPath();
 			WatchKey key = null;
 			try
 			{
@@ -123,7 +128,7 @@ public class FileSystemWatcher {
 		 
 				// The tablets will always send all forms as a single line, to be contained in this string.
 				String content = "";
-				Scanner in = new Scanner(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Desktop/Shortcutz/" + filename));
+				Scanner in = new Scanner(new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString()));
 				while (in.hasNext())
 				{
 					content += in.next();
@@ -156,7 +161,7 @@ public class FileSystemWatcher {
 					{
 						// Once again, we cannot be sure of the number of items present.
 						// All items will be read onto this string.
-						String items[] = new String[150];
+						ArrayList<String> items = new ArrayList<String>();  
 						done = false;
 						// A count of all items in the current form.
 						i = 0;
@@ -166,19 +171,19 @@ public class FileSystemWatcher {
 							int index = form.indexOf("|");
 							if (index == -1) 
 							{
-								items[i] = form;
+								items.add(form); 
 								done = true;
 							}
 							else 
 							{
-								items[i] = form.substring(0, index);
+								items.add(form.substring(0, index)); 
 								form = form.substring(index+1);
 							}
 							i++;
 						}
 						// We now know the number of items we've read.
 						// This means we can get rid of all null elements of the array.
-						String formItems[] = Arrays.copyOf(items, i);
+						ArrayList<String> formItems = (ArrayList<String>) (items.clone());
 						try {
 							storeInDB(formItems);
 							conn.close();
@@ -226,7 +231,7 @@ public class FileSystemWatcher {
 		
 	} // End output
 	
-	public static void storeInDB(String[] items) throws SQLException
+	public static void storeInDB(ArrayList<String> formItems) throws SQLException
 	{
 		 
 		int reportID = 0;
@@ -239,12 +244,12 @@ public class FileSystemWatcher {
 		{
 			CallableStatement stmt = null;
 			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?)}");
-			stmt.setInt(1, Integer.parseInt(items[4]));
-			stmt.setInt(2, Integer.parseInt(items[2]));
-			stmt.setInt(3, Integer.parseInt(items[0]));
-			stmt.setString(4, items[1]);
+			stmt.setInt(1, Integer.parseInt(formItems.get(4)));
+			stmt.setInt(2, Integer.parseInt(formItems.get(2)));
+			stmt.setInt(3, Integer.parseInt(formItems.get(0)));
+			stmt.setString(4, formItems.get(1));
 			boolean bool = true;
-			int num = Integer.parseInt(items[3]);
+			int num = Integer.parseInt(formItems.get(3));
 			if (num == 0) bool = false;
 			stmt.setBoolean(5, bool);
 			stmt.registerOutParameter(6, Types.INTEGER);
@@ -266,10 +271,10 @@ public class FileSystemWatcher {
 		    }
 		    int id = 0;
 		    String val = "";
-		   for (int i = 5; i < items.length; i++)
+		   for (int i = 5; i < formItems.size(); i++)
 		   {
 				   val = "";
-				   String item[] = items[i].split(",");
+				   String item[] = formItems.get(i).split(",");
 				   id  = Integer.parseInt(item[0]);
 				   for (int j = 1; j < item.length; j++)
 				   {
@@ -319,5 +324,4 @@ public class FileSystemWatcher {
 		return connected;
 		
 	} // End getConnection
-	
 }
