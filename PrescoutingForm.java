@@ -10,13 +10,28 @@ public class PrescoutingForm extends Form {
 		this.scoutNames = scoutNames;
 	}
 	
+	public PrescoutingForm(int reportID, int tabletNum, int teamNum, ArrayList<String> scoutNames) {
+		super(reportID, FormTypes.PRESCOUTING_FORM, tabletNum, teamNum);
+		this.scoutNames = scoutNames;
+	}
+	
 	public PrescoutingForm(int tabletNum, int teamNum, String... scoutNames) {
 		super(FormTypes.PRESCOUTING_FORM, tabletNum, teamNum);
 		for (int i = 0; i < scoutNames.length; i++) this.scoutNames.add(scoutNames[i]);
 	}
 	
+	public PrescoutingForm(int reportID, int tabletNum, int teamNum, String... scoutNames) {
+		super(reportID, FormTypes.PRESCOUTING_FORM, tabletNum, teamNum);
+		for (int i = 0; i < scoutNames.length; i++) this.scoutNames.add(scoutNames[i]);
+	}
+	
 	public PrescoutingForm(int tabletNum, int teamNum) {
 		super(FormTypes.PRESCOUTING_FORM, tabletNum, teamNum);
+		scoutNames = new ArrayList<>();
+	}
+	
+	public PrescoutingForm(int reportID, int tabletNum, int teamNum) {
+		super(reportID, FormTypes.PRESCOUTING_FORM, tabletNum, teamNum);
 		scoutNames = new ArrayList<>();
 	}
 	
@@ -47,8 +62,8 @@ public class PrescoutingForm extends Form {
 		return scoutNames.remove(scoutName);
 	}
 
-	public boolean removeScout(Collection<? extends String> scoutNames) {
-		return this.scoutNames.remove(scoutNames);
+	public boolean removeScouts(Collection<? extends String> scoutNames) {
+		return this.scoutNames.removeAll(scoutNames);
 	}
 
 	public boolean removeScouts(String[] scoutNames) {

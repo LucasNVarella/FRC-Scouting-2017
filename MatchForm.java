@@ -9,8 +9,20 @@ public class MatchForm extends Form {
 		this.matchNum = matchNum;
 	}
 	
+	public MatchForm(int reportID, int tabletNum, int teamNum, String scoutName, int matchNum) {
+		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum);
+		this.scoutName = scoutName;
+		this.matchNum = matchNum;
+	}
+	
 	public MatchForm(int tabletNum, int teamNum) {
 		super(FormTypes.MATCH_FORM, tabletNum, teamNum);
+		this.scoutName = "";
+		this.matchNum = -1;
+	}
+	
+	public MatchForm(int reportID, int tabletNum, int teamNum) {
+		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum);
 		this.scoutName = "";
 		this.matchNum = -1;
 	}

@@ -1,4 +1,3 @@
-
 /**************************************************************************************************
  * Scouting0.8 : Database version
  * @Author Lucas Varella
@@ -98,7 +97,7 @@ public class FileSystemWatcher {
 			Path dir = new File(System.getProperty("user.home"), "Desktop").toPath();
 			WatchKey key = null;
 			try {
-				key = dir.register(watcher, ENTRY_CREATE, ENTRY_MODIFY);
+				key = dir.register(watcher, ENTRY_CREATE);
 				key = watcher.take();
 			} catch (IOException | InterruptedException x) {
 				x.printStackTrace();
