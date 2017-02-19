@@ -133,45 +133,9 @@ public class FileSystemWatcher {
 
 				// The tablets will always send all forms as a single line, to
 				// be contained in this string.
-				String content = "";
-				Scanner in = new Scanner(new File(new File(System.getProperty("user.home"), "Desktop"),
-						filename.getFileName().toString()));
-				String outputToFile = "";
-
-				// Finds USBs mounted
-				File files[] = File.listRoots();
-				FileSystemView fsv = FileSystemView.getFileSystemView();
-				String outputFilePath = "";
-				for (File file : files) {
-					if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
-						outputFilePath = file.getAbsolutePath();
-				}
-
-				// Creates file and checks if it is modifiable
-				File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
-				outputToUSB.setWritable(true);
-				if (!outputToUSB.exists()) {
-					if (!outputToUSB.createNewFile())
-						throw new IOException();
-				}
-				while (in.hasNext()) {
-					content += in.nextLine();
-					// Appends info to an output string, which be added to the
-					// output file (which will be put on the USB)
-					outputToFile += content;
-				}
-
-				// Outputs the information to the file
-				System.out.println(outputToFile);
-				try {
-					FileWriter outputInfoToUSBFile = new FileWriter(outputToUSB, false);
-					outputInfoToUSBFile.write(outputToFile);
-					outputInfoToUSBFile.close();
-				} catch (FileNotFoundException ioe) {
-					System.err.println("FileNotFound: " + outputToUSB);
-				} catch (IOException ioe) {
-					System.err.println("IOException: " + ioe);
-				}
+				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString());
+				content = readFromFile(inputFile); 
+				writeToFile(inputFile); 
 
 				// We do not know how many forms will be present in the file.
 				// The next loop will read all of the forms it finds onto this
@@ -242,6 +206,56 @@ public class FileSystemWatcher {
 
 	} // End main
 
+	public static void writeToFile(File inputFile) 
+	{
+		Scanner in = new Scanner(inputFile); 
+		String outputToFile = ""; 
+		
+		// Finds USBs mounted
+		File files[] = File.listRoots();
+		FileSystemView fsv = FileSystemView.getFileSystemView();
+		String outputFilePath = "";
+		for (File file : files) {
+			if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
+				outputFilePath = file.getAbsolutePath();
+		}
+
+		// Creates file and checks if it is modifiable
+		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
+		outputToUSB.setWritable(true);
+		if (!outputToUSB.exists()) {
+			if (!outputToUSB.createNewFile())
+				throw new IOException();
+		}
+		while (in.hasNext()) {
+			// Appends info to an output string, which be added to the output file (which will be put on the USB)
+			outputToFile += content;
+		}
+
+		// Outputs the information to the file
+		System.out.println(outputToFile);
+		try {
+			FileWriter outputInfoToUSBFile = new FileWriter(outputToUSB, false);
+			outputInfoToUSBFile.write(outputToFile);
+			outputInfoToUSBFile.close();
+		} catch (FileNotFoundException ioe) {
+			System.err.println("FileNotFound: " + outputToUSB);
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe);
+		}
+		
+	}
+	
+	public static String readFromFile(File inputFile)
+	{
+		Scanner in = new Scanner(inputFile); 
+		String content = ""; 
+		while (in.hasNext())
+		{
+			content += in.next(); 
+		}
+	}
+	
 	// method output() takes in a string to write it to the JFrame (the
 	// "console").
 	public static void output(String s) {
