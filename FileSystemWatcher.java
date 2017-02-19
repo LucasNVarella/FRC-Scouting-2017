@@ -134,7 +134,7 @@ public class FileSystemWatcher {
 				// The tablets will always send all forms as a single line, to
 				// be contained in this string.
 				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString());
-				content = readFromFile(inputFile); 
+				String content = readFromFile(inputFile); 
 				writeToFile(inputFile); 
 
 				// We do not know how many forms will be present in the file.
@@ -177,12 +177,8 @@ public class FileSystemWatcher {
 							}
 							i++;
 						}
-						// We now know the number of items we've read.
-						// This means we can get rid of all null elements of the
-						// array.
-						ArrayList<String> formItems = (ArrayList<String>) (items.clone());
 						try {
-							storeInDB(formItems);
+							storeInDB(items);
 							conn.close();
 						} catch (SQLException ev1) {
 							ev1.printStackTrace();
@@ -208,7 +204,6 @@ public class FileSystemWatcher {
 
 	public static void writeToFile(File inputFile) 
 	{
-		Scanner in = new Scanner(inputFile); 
 		String outputToFile = ""; 
 		
 		// Finds USBs mounted
@@ -223,15 +218,14 @@ public class FileSystemWatcher {
 		// Creates file and checks if it is modifiable
 		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
 		outputToUSB.setWritable(true);
-		if (!outputToUSB.exists()) {
-			if (!outputToUSB.createNewFile())
-				throw new IOException();
+		try {
+			if (!outputToUSB.exists()) if (!outputToUSB.createNewFile()) throw new IOException();
+			outputToFile = readFromFile(inputFile);
+		} catch (IOException e) {
+			output("Failed to create/use usb file");
+			e.printStackTrace();
 		}
-		while (in.hasNext()) {
-			// Appends info to an output string, which be added to the output file (which will be put on the USB)
-			outputToFile += content;
-		}
-
+		
 		// Outputs the information to the file
 		System.out.println(outputToFile);
 		try {
@@ -246,14 +240,16 @@ public class FileSystemWatcher {
 		
 	}
 	
-	public static String readFromFile(File inputFile)
+	public static String readFromFile(File inputFile) throws IOException
 	{
 		Scanner in = new Scanner(inputFile); 
 		String content = ""; 
-		while (in.hasNext())
+		while (in.hasNextLine())
 		{
-			content += in.next(); 
+			content += in.nextLine(); 
 		}
+		in.close();
+		return content;
 	}
 	
 	// method output() takes in a string to write it to the JFrame (the
@@ -281,21 +277,22 @@ public class FileSystemWatcher {
 			output("DB broken!");
 		} else {
 			CallableStatement stmt = null;
-			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?)}");
-			stmt.setInt(1, Integer.parseInt(formItems.get(4)));
-			stmt.setInt(2, Integer.parseInt(formItems.get(2)));
-			stmt.setInt(3, Integer.parseInt(formItems.get(0)));
-			stmt.setString(4, formItems.get(1));
+			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?,?)}");
+			int num = Integer.parseInt(formItems.get(0));
 			boolean bool = true;
-			int num = Integer.parseInt(formItems.get(3));
 			if (num == 0)
 				bool = false;
-			stmt.setBoolean(5, bool);
-			stmt.registerOutParameter(6, Types.INTEGER);
+			stmt.setBoolean(1, bool);
+			stmt.setInt(2, Integer.parseInt(formItems.get(1)));
+			stmt.setString(3, formItems.get(2));
+			stmt.setInt(4, Integer.parseInt(formItems.get(3)));
+			stmt.setInt(5, Integer.parseInt(formItems.get(4)));
+			stmt.setInt(6, Integer.parseInt(formItems.get(5)));
+			stmt.registerOutParameter(7, Types.INTEGER);
 
 			try {
 				stmt.executeQuery();
-				reportID = stmt.getInt(6);
+				reportID = stmt.getInt(7);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				output("broken");
@@ -306,7 +303,7 @@ public class FileSystemWatcher {
 			}
 			int id = 0;
 			String val = "";
-			for (int i = 5; i < formItems.size(); i++) {
+			for (int i = 6; i < formItems.size(); i++) {
 				val = "";
 				String item[] = formItems.get(i).split(",");
 				id = Integer.parseInt(item[0]);
