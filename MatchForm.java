@@ -1,46 +1,19 @@
 public class MatchForm extends Form {
-
-	private String scoutName;
-	private int matchNum;
 	
-	public MatchForm(int tabletNum, int teamNum, String scoutName, int matchNum) {
-		super(FormTypes.MATCH_FORM, tabletNum, teamNum);
-		this.scoutName = scoutName;
-		this.matchNum = matchNum;
+	public static final class MatchScoutingItems {
+		
 	}
 	
-	public MatchForm(int reportID, int tabletNum, int teamNum, String scoutName, int matchNum) {
-		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum);
-		this.scoutName = scoutName;
-		this.matchNum = matchNum;
+	public MatchForm(int tabletNum, int teamNum, String scoutName) {
+		super(FormTypes.MATCH_FORM, tabletNum, teamNum, scoutName);
 	}
 	
-	public MatchForm(int tabletNum, int teamNum) {
-		super(FormTypes.MATCH_FORM, tabletNum, teamNum);
-		this.scoutName = "";
-		this.matchNum = -1;
+	public MatchForm(int reportID, int tabletNum, int teamNum, String scoutName) {
+		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum, scoutName);
 	}
 	
-	public MatchForm(int reportID, int tabletNum, int teamNum) {
-		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum);
-		this.scoutName = "";
-		this.matchNum = -1;
-	}
-
-	public String getScoutName() {
-		return scoutName;
-	}
-
-	public void setScoutName(String scoutName) {
-		this.scoutName = scoutName;
-	}
-
-	public int getMatchNum() {
-		return matchNum;
-	}
-
-	public void setMatchNum(int matchNum) {
-		this.matchNum = matchNum;
+	public MatchForm(String rawForm) {
+		super(rawForm);
 	}
 	
 }

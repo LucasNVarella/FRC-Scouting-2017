@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
@@ -36,7 +35,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -111,6 +109,7 @@ public class FileSystemWatcher {
 			for (WatchEvent<?> event : key.pollEvents()) {
 
 				// The filename is the context of the event.
+				@SuppressWarnings("unchecked")
 				WatchEvent<Path> ev = (WatchEvent<Path>) event;
 				Path filename = ev.context();
 
@@ -140,17 +139,17 @@ public class FileSystemWatcher {
 				// We do not know how many forms will be present in the file.
 				// The next loop will read all of the forms it finds onto this
 				// array.
-				ArrayList<String> forms = new ArrayList<>();
+				ArrayList<Form> forms = new ArrayList<>();
 				// A count of all forms present in this file.
 				// flag
 				boolean done = false;
 				while (!done) {
 					// double pipes delimit forms in the file.
 					int index = content.indexOf("||");
-					if (index == -1)
-						done = true;
+					if (index == -1) done = true;
 					else {
-						forms.add(content.substring(0, index));
+						content.substring(0,)
+						forms.add(new Form(content.substring(0, index)));
 						content = content.substring(index + 2);
 					}
 				}
@@ -277,7 +276,7 @@ public class FileSystemWatcher {
 			output("DB broken!");
 		} else {
 			CallableStatement stmt = null;
-			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?,?)}");
+			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?)}");
 			int num = Integer.parseInt(formItems.get(0));
 			boolean bool = true;
 			if (num == 0)
@@ -287,12 +286,11 @@ public class FileSystemWatcher {
 			stmt.setString(3, formItems.get(2));
 			stmt.setInt(4, Integer.parseInt(formItems.get(3)));
 			stmt.setInt(5, Integer.parseInt(formItems.get(4)));
-			stmt.setInt(6, Integer.parseInt(formItems.get(5)));
-			stmt.registerOutParameter(7, Types.INTEGER);
+			stmt.registerOutParameter(6, Types.INTEGER);
 
 			try {
 				stmt.executeQuery();
-				reportID = stmt.getInt(7);
+				reportID = stmt.getInt(6);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				output("broken");
@@ -303,7 +301,7 @@ public class FileSystemWatcher {
 			}
 			int id = 0;
 			String val = "";
-			for (int i = 6; i < formItems.size(); i++) {
+			for (int i = 5; i < formItems.size(); i++) {
 				val = "";
 				String item[] = formItems.get(i).split(",");
 				id = Integer.parseInt(item[0]);

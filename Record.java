@@ -1,28 +1,20 @@
-public class Record<T extends Object> {
+public final class Record {
 
-	private T value;
+	private String value;
 	// database item id
 	private int itemID;
 	
-	public Record(T value, int itemID) {
+	public Record(String value, int itemID) {
 		this.value = value;
 		this.itemID = itemID;
 	}
 
-	public T getValue() {
+	public String getValue() {
 		return value;
-	}
-
-	public void setValue(T value) {
-		this.value = value;
 	}
 
 	public int getItemID() {
 		return itemID;
-	}
-
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
 	}
 	
 }
