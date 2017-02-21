@@ -1,58 +1,86 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class Form {
+public class Form {
 	
 	private String rawForm;
 
 	private FormTypes formType;
 	private int tabletNum;
 	private int teamNum;
+	private int matchNum;
 	private String scoutName;
 	// database report id
 	private int reportID;
 	ArrayList<Record> records;
 	
+	public static final String FORM_DELIMITER = "||";
+	public static final String ITEM_DELIMITER = "|";
+	public static final String ID_DELIMITER = ",";
+	
 	public static enum FormTypes {
-		MATCH_FORM, PRESCOUTING_FORM
+		PRESCOUTING_FORM, MATCH_FORM
 	}
 	
-	public static final class RawFormOrder {
+	public static final class FormOrder {
 		public static final int FORM_TYPE = 0;
 		public static final int TABLET_NUM = 1;
 		public static final int SCOUT_NAME = 2;
 		public static final int TEAM_NUM = 3;
 		public static final int MATCH_NUM = 4;
 		
-		public static final int highestMatchScoutingIndex() {
+		public static final int highestIndex() {
 			return MATCH_NUM;
 		}
-		
-		public static final int highestPrescoutingIndex() {
-			return TEAM_NUM;
-		}
 	}
-
+	
 	public Form(FormTypes formType, int tabletNum, int teamNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
+		this.matchNum = -1;
 		this.scoutName = scoutName;
 		this.reportID = -1;
+		records = new ArrayList<>();
 		this.rawForm = null;
 	}
 
+	public Form(FormTypes formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
+		this.formType = formType;
+		this.tabletNum = tabletNum;
+		this.teamNum = teamNum;
+		this.matchNum = matchNum;
+		this.scoutName = scoutName;
+		this.reportID = -1;
+		records = new ArrayList<>();
+		this.rawForm = null;
+	}
+	
 	public Form(int reportID, FormTypes formType, int tabletNum, int teamNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
+		this.matchNum = -1;
 		this.scoutName = scoutName;
 		this.reportID = reportID;
+		records = new ArrayList<>();
+		this.rawForm = null;
+	}
+
+	public Form(int reportID, FormTypes formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
+		this.formType = formType;
+		this.tabletNum = tabletNum;
+		this.teamNum = teamNum;
+		this.matchNum = matchNum;
+		this.scoutName = scoutName;
+		this.reportID = reportID;
+		records = new ArrayList<>();
 		this.rawForm = null;
 	}
 	
 	public Form(String rawForm) {
 		this.rawForm = rawForm;
+		records = new ArrayList<>();
 		breakDownForm(this);
 	}
 
@@ -79,6 +107,14 @@ public abstract class Form {
 
 	public int getFormID() {
 		return reportID;
+	}
+	
+	public int getMatchNum() {
+		return matchNum;
+	}
+
+	public void setMatchNum(int matchNum) {
+		this.matchNum = matchNum;
 	}
 
 	public void setFormType(FormTypes formType) {
@@ -156,24 +192,18 @@ public abstract class Form {
 	private static void breakDownForm(Form form) {
 		String rawForm = form.getRawForm();
 		if (rawForm != null) {
-			String[] items = rawForm.split("|");
-			int type = Integer.parseInt(items[RawFormOrder.FORM_TYPE]);
-			int highestIndex = 0;
-			if (type == FormTypes.MATCH_FORM.ordinal()) {
-				form.setFormType(FormTypes.MATCH_FORM);
-				highestIndex = RawFormOrder.highestMatchScoutingIndex();
-			}
-			else if (type == FormTypes.PRESCOUTING_FORM.ordinal()) {
-				form.setFormType(FormTypes.PRESCOUTING_FORM);
-				highestIndex = RawFormOrder.highestPrescoutingIndex();
-			}
-			form.setTabletNum(Integer.parseInt(items[RawFormOrder.TABLET_NUM]));
-			form.setTeamNum(Integer.parseInt(items[RawFormOrder.TEAM_NUM]));
-			form.setScoutName(items[RawFormOrder.SCOUT_NAME]);
+			String[] items = rawForm.split("\\" + ITEM_DELIMITER);
+			int type = Integer.parseInt(items[FormOrder.FORM_TYPE]);
+			if (type == FormTypes.MATCH_FORM.ordinal()) form.setFormType(FormTypes.MATCH_FORM);
+			else if (type == FormTypes.PRESCOUTING_FORM.ordinal()) form.setFormType(FormTypes.PRESCOUTING_FORM);
+			form.setTabletNum(Integer.parseInt(items[FormOrder.TABLET_NUM]));
+			form.setTeamNum(Integer.parseInt(items[FormOrder.TEAM_NUM]));
+			form.setScoutName(items[FormOrder.SCOUT_NAME]);
+			form.setMatchNum(Integer.parseInt(items[FormOrder.MATCH_NUM]));
 			String rawRecords = "";
-			for (int i = 0; i < items.length-(highestIndex+1); i++) {
-				if (i == 0) rawRecords += items[highestIndex+i+1];
-				else rawRecords += "|" + items[highestIndex+i+1];
+			for (int i = 0; i < items.length-(FormOrder.highestIndex()+1); i++) {
+				if (i == 0) rawRecords += items[FormOrder.highestIndex()+i+1];
+				else rawRecords += ITEM_DELIMITER + items[FormOrder.highestIndex()+i+1];
 			}
 			form.addRecords(breakDownRecords(rawRecords, form.getFormType()));
 		}
@@ -181,12 +211,28 @@ public abstract class Form {
 	
 	private static Record[] breakDownRecords(String rawRecords, FormTypes type) {
 		ArrayList<Record> formRecords = new ArrayList<>();
-		String[] records = rawRecords.split("|");
+		String[] records = rawRecords.split("\\" + ITEM_DELIMITER);
 		for (String record : records) {
-			String[] elements = record.split(",");
+			String[] elements = record.split("\\" + ID_DELIMITER);
 			formRecords.add(new Record(elements[1], Integer.parseInt(elements[0])));
 		}
 		return formRecords.toArray(new Record[0]);
+	}
+	
+	@Override
+	public String toString() {
+		if (rawForm != null) return rawForm;
+		else {
+			rawForm = formType + ITEM_DELIMITER;
+			rawForm += tabletNum + ITEM_DELIMITER;
+			rawForm += scoutName + ITEM_DELIMITER;
+			rawForm += teamNum + ITEM_DELIMITER;
+			rawForm += matchNum;
+			for (int i = 0; i < records.size(); i++)
+				rawForm += ITEM_DELIMITER + records.get(i).getItemID()
+							+ ID_DELIMITER + records.get(i).getValue();
+			return rawForm;
+		}
 	}
 
 }

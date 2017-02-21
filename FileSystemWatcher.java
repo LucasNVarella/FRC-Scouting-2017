@@ -213,7 +213,7 @@ public class FileSystemWatcher {
 		// Now we will iterate through each item in each form
 		for (Form form : forms) {
 			try {
-				storeInDB(new ArrayList());
+				storeInDB(form);
 				conn.close();
 			} catch (SQLException ev1) {
 				ev1.printStackTrace();
@@ -348,29 +348,23 @@ public class FileSystemWatcher {
 
 	} // End output
 
-	public static void storeInDB(ArrayList<String> formItems) throws SQLException {
-
-		int reportID = 0;
-
+	public static void storeInDB(Form form) throws SQLException {
+		
 		if (!getConnection()) {
 			output("DB broken!");
 		} else {
 			CallableStatement stmt = null;
 			stmt = conn.prepareCall("{call procInsertReport(?,?,?,?,?,?)}");
-			int num = Integer.parseInt(formItems.get(0));
-			boolean bool = true;
-			if (num == 0)
-				bool = false;
-			stmt.setBoolean(1, bool);
-			stmt.setInt(2, Integer.parseInt(formItems.get(1)));
-			stmt.setString(3, formItems.get(2));
-			stmt.setInt(4, Integer.parseInt(formItems.get(3)));
-			stmt.setInt(5, Integer.parseInt(formItems.get(4)));
+			stmt.setInt(1, form.getFormType().ordinal());
+			stmt.setInt(2, form.getTabletNum());
+			stmt.setString(3, form.getScoutName());
+			stmt.setInt(4, form.getTeamNum());
+			stmt.setInt(5, form.getMatchNum());
 			stmt.registerOutParameter(6, Types.INTEGER);
 
 			try {
 				stmt.executeQuery();
-				reportID = stmt.getInt(6);
+				form.setFormID(stmt.getInt(6));
 			} catch (SQLException e) {
 				e.printStackTrace();
 				output("broken");
@@ -379,20 +373,11 @@ public class FileSystemWatcher {
 				if (stmt != null)
 					stmt.close();
 			}
-			int id = 0;
-			String val = "";
-			for (int i = 5; i < formItems.size(); i++) {
-				val = "";
-				String item[] = formItems.get(i).split(",");
-				id = Integer.parseInt(item[0]);
-				for (int j = 1; j < item.length; j++) {
-					val += item[j];
-				}
-				stmt = null;
+			for (int i = 0; i < form.getAllRecords().size(); i++) {
 				stmt = conn.prepareCall("{call procInsertRecord(?,?,?)}");
-				stmt.setString(1, val);
-				stmt.setInt(2, reportID);
-				stmt.setInt(3, id);
+				stmt.setString(1, form.getAllRecords().get(i).getValue());
+				stmt.setInt(2, form.getFormID());
+				stmt.setInt(3, form.getAllRecords().get(i).getItemID());
 
 				try {
 					stmt.executeQuery();
