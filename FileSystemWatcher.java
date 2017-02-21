@@ -369,7 +369,7 @@ public class FileSystemWatcher {
 		boolean connected = false;
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://LucasPC:3306/scouting?useSSL=false", "lucas", "lucas");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scouting?useSSL=false", "root", "vanshika");
 
 			System.out.println("Connected to database");
 			connected = true;
