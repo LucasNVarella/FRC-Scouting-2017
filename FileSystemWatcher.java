@@ -39,6 +39,7 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.JOptionPane;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -80,6 +81,11 @@ public class FileSystemWatcher {
 		console.setLocation(10, 10);
 		frame.add(console);
 		console.setVisible(true);
+		
+		// Create transfer & read buttons
+		String[] buttons = {"Transfer to USB", "Read from USB"}; 
+		int transfer = JOptionPane.showOptionDialog(frame, "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.PLAIN_MESSAGE, 0, null, buttons, buttons[1]);
+		
 
 		output("Ready");
 
