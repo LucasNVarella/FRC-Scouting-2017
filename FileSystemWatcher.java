@@ -50,6 +50,13 @@ public class FileSystemWatcher {
 	final int MATCH_NUM_INDEX = 4;
 	final int TEAM_NUM_INDEX = 2;
 	final int TABLET_NUM_INDEX = 0;
+	final String Shreya_PW = "vanshika"; 
+	final String Shreya_user = "root"; 
+	final String Lucas_PW = "Lucas"; 
+	final String Lucas_user = "Lucas"; 
+	final String Shreya_MySQL = "jdbc:mysql://localhost:3306/scouting?useSSL=false";
+	final String Lucas_MySQL = "jdbc:mysql://LucasPC:3306/scouting?useSSL=false"; 
+	final String Shreya_Desktop = "/Users/local/Desktop"; 
 
 	// The current string to display in the JFrame
 	private static String dispString = "";
