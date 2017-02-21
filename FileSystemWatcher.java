@@ -103,7 +103,7 @@ public class FileSystemWatcher {
 			}
 
 			// The main folder where changes will be monitored.
-			Path dir = new File("/Users/main/Desktop").toPath();
+			Path dir = new File(System.getProperty("user.home"), "Desktop").toPath();
 			WatchKey key = null;
 			try {
 				key = dir.register(watcher, ENTRY_CREATE);
@@ -165,7 +165,7 @@ public class FileSystemWatcher {
 	public static void checkForUSBs() 
 	{
 		String outputFilePath = ""; 
-		while (outputFilePath == null) 
+		while (outputFilePath.equals("")) 
 		{
 			outputFilePath = findMountedUSB(); 
 		}
@@ -173,7 +173,7 @@ public class FileSystemWatcher {
 		File[] filesInUSB = dir.listFiles(); 
 		for (File file : filesInUSB) 
 		{
-			processFileFromUSB(file); 
+			if (file.isFile()) processFileFromUSB(file); 
 		}
 	}
 	
@@ -302,11 +302,11 @@ public class FileSystemWatcher {
 		// Outputs the information to the file
 		System.out.println(outputToFile);
 		try {
-			FileWriter outputInfoToUSBFile = new FileWriter("/Users/local/Desktop", false);
+			FileWriter outputInfoToUSBFile = new FileWriter(new File(System.getProperty("user.home"), "Desktop"), false);
 			outputInfoToUSBFile.write(outputToFile);
 			outputInfoToUSBFile.close();
 				} catch (FileNotFoundException ioe) {
-					System.err.println("FileNotFound: " + "/Users/local/Desktop");
+					System.err.println("FileNotFound: " + new File(System.getProperty("user.home"), "Desktop"));
 				} catch (IOException ioe) {
 					System.err.println("IOException: " + ioe);
 				}
@@ -408,7 +408,7 @@ public class FileSystemWatcher {
 		boolean connected = false;
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scouting?useSSL=false", "root", "vanshika");
+			conn = DriverManager.getConnection("jdbc:mysql://LucasPC:3306/scouting?useSSL=false", "lucas", "lucas");
 
 			System.out.println("Connected to database");
 			connected = true;
