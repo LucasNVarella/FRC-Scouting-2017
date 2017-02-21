@@ -65,15 +65,14 @@ public class FileSystemWatcher {
  
 		// Initialize UI 
 		String[] buttons = {"Transfer to USB", "Read from USB"}; 
-		int transfer = JOptionPane.showOptionDialog(initializeUI(), "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
+		int response = JOptionPane.showOptionDialog(initializeUI(), "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
 		output("Ready");
-		
 		if (response == JOptionPane.YES_OPTION)
 		{
 			System.out.println("Transferring to USB");
 			checkFolderForFile(); 
 		}
-		else if (response == JOption.NO_OPTION) 
+		else if (response == JOptionPane.NO_OPTION) 
 		{
 			System.out.println("Reading from a USB"); 
 			checkForUSBs();
@@ -88,18 +87,29 @@ public class FileSystemWatcher {
 
 	public static void checkFolderForFile() 
 	{
+		System.out.println("Checking folder for file...");
+		output("Checking folder for file..."); 
+		
 		// the WatchService will continue to check for File System events until
 		// the program is closed.
 		// Look up WatchService for more info.
 		while (true) {
 
-			WatchService watcher = FileSystems.getDefault().newWatchService();
+			WatchService watcher = null;
+			try {
+				watcher = FileSystems.getDefault().newWatchService();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 			// The main folder where changes will be monitored.
-			Path dir = new File(System.getProperty("user.home"), "Desktop").toPath();
+			Path dir = new File("/Users/main/Desktop").toPath();
 			WatchKey key = null;
 			try {
 				key = dir.register(watcher, ENTRY_CREATE);
 				key = watcher.take();
+				System.out.println("Found change..."); 
+				output("Found change..."); 
 			} catch (IOException | InterruptedException x) {
 				x.printStackTrace();
 			}
@@ -117,33 +127,26 @@ public class FileSystemWatcher {
 				Path filename = ev.context();
 
 				// Verify that the new file is a text file.
-				try {
-					// Resolve the filename against the directory.
-					// This will indicate whether a new file found is a text
-					// file.
-					// Checks for extraneous new files in the monitored folder.
-					// Look up resolving file names for more info.
-					Path child = dir.resolve(filename);
-					if (!Files.probeContentType(child).equals("text/plain")) {
-						String message = String.format("New file '%s'" + " is not a plain text file.%n", filename);
-						output(message);
-					}
-				} catch (IOException x) {
-					System.err.println(x);
-					continue;
-				}
+//				try {
+//					// Resolve the filename against the directory.
+//					// This will indicate whether a new file found is a text
+//					// file.
+//					// Checks for extraneous new files in the monitored folder.
+//					// Look up resolving file names for more info.
+//					Path child = dir.resolve(filename);
+////					if (!Files.probeContentType(child).equals("text/plain")) {
+////						String message = String.format("New file '%s'" + " is not a plain text file.%n", filename);
+////						output(message);
+////					}
+//				} catch (IOException x) {
+//					System.err.println(x);
+//					continue;
+//				}
 
 				// The tablets will always send all forms as a single line, to
 				// be contained in this string.
 				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString());
-				try 
-				{
-					writeToFile(inputFile);
-				}
-				catch (IOException x) 
-				{ 
-					System.err.println(x); 
-				}
+				writeToUSB(inputFile);
 				
 			}
 
@@ -176,7 +179,13 @@ public class FileSystemWatcher {
 	
 	public static void processFileFromUSB(File inputFile) 
 	{
-		String content = readFromFile(inputFile); 
+		String content="";
+		try {
+			content = readFromFile(inputFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		// We do not know how many forms will be present in the file.
 		// The next loop will read all of the forms it finds onto this
 		// array.
@@ -233,21 +242,29 @@ public class FileSystemWatcher {
 	
 	public static String findMountedUSB()
 	{
+		System.out.println("Finding mounted USBs...");
+		output("Finding mounted USBs...");
 		// Finds USBs mounted
 		File files[] = File.listRoots();
 		FileSystemView fsv = FileSystemView.getFileSystemView();
 		String outputFilePath = "";
-		for (File file : files) {
-			if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
-					outputFilePath = file.getAbsolutePath();
-			}
+		try {
+			for (File file : files) {
+				if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
+						outputFilePath = file.getAbsolutePath();
+				}
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
+			output("Failed to Find USB(s)");
+			System.out.println("Failed to find USB(s)"); 
+		}
 		return outputFilePath; 
 	}
 	
 	public static void writeToUSB(File inputFile) 
 	{
 		String outputToFile = ""; 
-		outputFilePath = findMountedUSB(); 
+		String outputFilePath = findMountedUSB(); 
 		// Creates file and checks if it is modifiable
 		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
 		outputToUSB.setWritable(true);
@@ -271,6 +288,28 @@ public class FileSystemWatcher {
 			System.err.println("IOException: " + ioe);
 		}
 		
+	}
+	
+	public static void writeToDesktop(File inputFile) 
+	{
+		String outputToFile="";
+		try {
+			outputToFile = readFromFile(inputFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		// Outputs the information to the file
+		System.out.println(outputToFile);
+		try {
+			FileWriter outputInfoToUSBFile = new FileWriter("/Users/local/Desktop", false);
+			outputInfoToUSBFile.write(outputToFile);
+			outputInfoToUSBFile.close();
+				} catch (FileNotFoundException ioe) {
+					System.err.println("FileNotFound: " + "/Users/local/Desktop");
+				} catch (IOException ioe) {
+					System.err.println("IOException: " + ioe);
+				}
 	}
 	
 	public static String readFromFile(File inputFile) throws IOException
