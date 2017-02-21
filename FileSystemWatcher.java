@@ -60,37 +60,34 @@ public class FileSystemWatcher {
 	private static JFrame frame;
 	private static JTextArea console;
 
-	public static void main(String[] args) throws IOException {
-
-		// Initiating the UI
-		frame = new JFrame();
-		// intiating the frame
-		frame.setTitle("Scouting File System Watcher");
-		frame.setLayout(null);
-		frame.setLocation(100, 100);
-		frame.setSize(980, 870);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-
-		console = new JTextArea("");
-		console.setEditable(false);
-		console.setFocusable(true);
-		console.setLayout(null);
-		console.setLineWrap(true);
-		console.setSize(945, 805);
-		console.setLocation(10, 10);
-		frame.add(console);
-		console.setVisible(true);
-		
-		// Create transfer & read buttons
+	public static void main(String[] args) throws IOException 
+	{
+ 
+		// Initialize UI 
 		String[] buttons = {"Transfer to USB", "Read from USB"}; 
-		int transfer = JOptionPane.showOptionDialog(frame, "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.PLAIN_MESSAGE, 0, null, buttons, buttons[1]);
+		int transfer = JOptionPane.showOptionDialog(initializeUI(), "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
+		output("Ready");
+		
+		if (response == JOptionPane.YES_OPTION)
+		{
+			System.out.println("Transferring to USB");
+			checkFolderForFile(); 
+		}
+		else if (response == JOption.NO_OPTION) 
+		{
+			System.out.println("Reading from a USB"); 
+			checkForUSBs();
+		}
+		else 
+		{
+			System.out.println("Error reading input"); 
+		}
 		
 
-		output("Ready");
+	} // End main
 
-		// Done initializing UI
-
+	public static void checkFolderForFile() 
+	{
 		// the WatchService will continue to check for File System events until
 		// the program is closed.
 		// Look up WatchService for more info.
@@ -139,37 +136,15 @@ public class FileSystemWatcher {
 				// The tablets will always send all forms as a single line, to
 				// be contained in this string.
 				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString());
-				String content = readFromFile(inputFile); 
-				writeToFile(inputFile); 
-
-				// We do not know how many forms will be present in the file.
-				// The next loop will read all of the forms it finds onto this
-				// array.
-				ArrayList<Form> forms = new ArrayList<>();
-				// A count of all forms present in this file.
-				// flag
-				boolean done = false;
-				while (!done) {
-					// double pipes delimit forms in the file.
-					int index = content.indexOf("||");
-					if (index == -1) done = true;
-					else {
-						forms.add(new Form(content.substring(0, index)));
-						content = content.substring(index + 2);
-					}
+				try 
+				{
+					writeToFile(inputFile);
 				}
-				// We now know the number of forms we've read.
-				// Now we will iterate through each item in each form
-				for (Form form : forms) {
-					try {
-						storeInDB(new ArrayList());
-						conn.close();
-					} catch (SQLException ev1) {
-						ev1.printStackTrace();
-					}
-					output("File read successfully.");
+				catch (IOException x) 
+				{ 
+					System.err.println(x); 
 				}
-
+				
 			}
 
 			// Reset the key -- this step is critical if you want to
@@ -182,22 +157,97 @@ public class FileSystemWatcher {
 			}
 
 		}
-
-	} // End main
-
-	public static void writeToFile(File inputFile) 
+	}
+	
+	public static void checkForUSBs() 
 	{
-		String outputToFile = ""; 
+		String outputFilePath = ""; 
+		while (outputFilePath == null) 
+		{
+			outputFilePath = findMountedUSB(); 
+		}
+		File dir = new File(outputFilePath); 
+		File[] filesInUSB = dir.listFiles(); 
+		for (File file : filesInUSB) 
+		{
+			processFileFromUSB(file); 
+		}
+	}
+	
+	public static void processFileFromUSB(File inputFile) 
+	{
+		String content = readFromFile(inputFile); 
+		// We do not know how many forms will be present in the file.
+		// The next loop will read all of the forms it finds onto this
+		// array.
+		ArrayList<Form> forms = new ArrayList<>();
+		// A count of all forms present in this file.
+		// flag
+		boolean done = false;
+		while (!done) {
+			// double pipes delimit forms in the file.
+			int index = content.indexOf("||");
+			if (index == -1) done = true;
+			else {
+				forms.add(new Form(content.substring(0, index)));
+				content = content.substring(index + 2);
+			}
+		}
+		// We now know the number of forms we've read.
+		// Now we will iterate through each item in each form
+		for (Form form : forms) {
+			try {
+				storeInDB(new ArrayList());
+				conn.close();
+			} catch (SQLException ev1) {
+				ev1.printStackTrace();
+			}
+			output("File read successfully.");
+		}
+	}
+	
+	public static JFrame initializeUI()
+	{
+		// Initiating the UI
+		frame = new JFrame();
+		// intiating the frame
+		frame.setTitle("Scouting File System Watcher");
+		frame.setLayout(null);
+		frame.setLocation(100, 100);
+		frame.setSize(980, 870);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+
+		console = new JTextArea("");
+		console.setEditable(false);
+		console.setFocusable(true);
+		console.setLayout(null);
+		console.setLineWrap(true);
+		console.setSize(945, 805);
+		console.setLocation(10, 10);
+		frame.add(console);
+		console.setVisible(true);
 		
+		return frame; 
+	}
+	
+	public static String findMountedUSB()
+	{
 		// Finds USBs mounted
 		File files[] = File.listRoots();
 		FileSystemView fsv = FileSystemView.getFileSystemView();
 		String outputFilePath = "";
 		for (File file : files) {
 			if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
-				outputFilePath = file.getAbsolutePath();
-		}
-
+					outputFilePath = file.getAbsolutePath();
+			}
+		return outputFilePath; 
+	}
+	
+	public static void writeToUSB(File inputFile) 
+	{
+		String outputToFile = ""; 
+		outputFilePath = findMountedUSB(); 
 		// Creates file and checks if it is modifiable
 		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
 		outputToUSB.setWritable(true);
