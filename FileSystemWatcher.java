@@ -154,42 +154,20 @@ public class FileSystemWatcher {
 					int index = content.indexOf("||");
 					if (index == -1) done = true;
 					else {
-						content.substring(0,)
 						forms.add(new Form(content.substring(0, index)));
 						content = content.substring(index + 2);
 					}
 				}
 				// We now know the number of forms we've read.
 				// Now we will iterate through each item in each form
-				for (String form : forms) {
-					if (!form.equals("")) {
-						// Once again, we cannot be sure of the number of items
-						// present.
-						// All items will be read onto this string.
-						ArrayList<String> items = new ArrayList<String>();
-						done = false;
-						// A count of all items in the current form.
-						int i = 0;
-						while (!done) {
-							// Single pipes delimit items in the form.
-							int index = form.indexOf("|");
-							if (index == -1) {
-								items.add(form);
-								done = true;
-							} else {
-								items.add(form.substring(0, index));
-								form = form.substring(index + 1);
-							}
-							i++;
-						}
-						try {
-							storeInDB(items);
-							conn.close();
-						} catch (SQLException ev1) {
-							ev1.printStackTrace();
-						}
-						output("File read successfully.");
+				for (Form form : forms) {
+					try {
+						storeInDB(new ArrayList());
+						conn.close();
+					} catch (SQLException ev1) {
+						ev1.printStackTrace();
 					}
+					output("File read successfully.");
 				}
 
 			}
