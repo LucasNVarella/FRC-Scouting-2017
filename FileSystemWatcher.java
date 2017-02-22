@@ -32,6 +32,8 @@ import java.nio.file.WatchService;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -202,7 +204,7 @@ public class FileSystemWatcher {
 		boolean done = false;
 		while (!done) {
 			// double pipes delimit forms in the file.
-			int index = content.indexOf("||");
+			int index = content.indexOf(Form.FORM_DELIMITER);
 			if (index == -1) done = true;
 			else {
 				forms.add(new Form(content.substring(0, index)));
@@ -401,8 +403,7 @@ public class FileSystemWatcher {
 
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://LucasPC:3306/scouting?useSSL=false", "lucas", "lucas");
-
-			System.out.println("Connected to database");
+			output("Connected to database");
 			connected = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -412,4 +413,35 @@ public class FileSystemWatcher {
 		return connected;
 
 	} // End getConnection
+	
+	public static ResultSet[] getPrescoutingForm(int teamNum) {
+		ResultSet[] resultSets = new ResultSet[2];
+		if (!getConnection()) {
+			output("DB Broken!");
+		} else {
+			int reportID = 0;
+			String sql = "SELECT ID, TabletNum, ScoutName, TeamNum FROM scouting.report WHERE (TeamNum = "
+							+ teamNum + ") AND (FormType = " + Form.FormTypes.PRESCOUTING_FORM.ordinal() + ")";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				stmt.executeQuery();
+				resultSets[0] = stmt.getResultSet();
+				reportID = resultSets[0].getInt(1);
+				stmt.close();
+			} catch (SQLException e) {
+				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+			}
+			sql = "SELECT `Value`, ITEM_ID FROM scouting.record WHERE (REPORT_ID = " + reportID + ")";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				stmt.executeQuery();
+				resultSets[1] = stmt.getResultSet();
+				stmt.close();
+			} catch (SQLException e) {
+				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+			}
+		}
+		return resultSets;
+	}
+	
 }
