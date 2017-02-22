@@ -41,4 +41,77 @@ public class PrescoutingForm extends Form {
 		super(rawForm);
 	}
 	
+	public void prescoutingFormVisualizer() {
+		
+		String[] items = getRawForm().split("|"); 
+		String[] identifyingInfo = new String[5]; 
+		for (int i = 0; i < 6; i++) 
+		{
+			identifyingInfo[i] = items[i]; 
+		}
+		
+		String[] formItems = new String[26];
+		for (int k = 0; k < 27; k++) 
+		{
+			for (int i = 6; i < 33; i++) 
+			{
+				formItems[k] = items[i];
+			}
+		}
+		
+		printIdentifyingInfo(identifyingInfo);
+		printFormItems(formItems); 
+		
+	}
+	
+	private void printIdentifyingInfo(String[] identifyingInfo) 
+	{
+		// Ignores the match number and whether it's a prescouting/matching form 
+		System.out.println("Tablet Number: "+identifyingInfo[1]);
+		System.out.println("Scout Names: "+identifyingInfo[2]);
+		System.out.println("Team Number: "+identifyingInfo[3]);
+	}
+	
+	private void printFormItems(String[] formItems) 
+	{
+		String returnString = ""; 
+		for (int i = 0; i < formItems.length; i++) 
+		{
+			String[] itemInfo = formItems[i].split(","); 
+			returnString += identifyItem(itemInfo[0])+itemInfo[1]+"\n"; 
+		}
+		System.out.println(returnString);
+	}
+	
+	private String identifyItem(String itemNum) 
+	{
+		if (itemNum.equals(ItemIDs.CAN_CLIMB)) return "Can climb?: "; 
+		else if (itemNum.equals(ItemIDs.COMMENTS)) return "Comments: "; 
+		else if (itemNum.equals(ItemIDs.DRIVE_TEAM_STUDENT_ONLY)) return "Is the drive team student only?"; 
+		else if (itemNum.equals(ItemIDs.FRIENDLINESS)) return "Friendliness rating: "; 
+		else if (itemNum.equals(ItemIDs.DRIVETRAIN_TYPE)) return "Drive train type: "; 
+		else if (itemNum.equals(ItemIDs.CODE_LANGUAGE_USED)) return "Code language used: "; 
+		else if (itemNum.equals(ItemIDs.DESCRIPTION_OF_ROBOT)) return "Description of robot: "; 
+		else if (itemNum.equals(ItemIDs.AUTO)) return "Has auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_HANDLE_GEARS)) return "Can handle gears in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_SHOOTS_HIGH)) return "Can shoot in the high goal in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_SHOOTS_LOW)) return "Can shoot in the low goal in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STARTS_CENTER)) return "Starts at the center line in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STARTS_IN_LINE_LEFT_GEAR)) return "Starts in line with the left gear in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STARTS_IN_LINE_RIGHT_GEAR)) return "Starts in line with the right gear in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STARTS_NEXT_TO_BOILER)) return "Starts next to the boiler in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STARTS_NEXT_TO_KEY)) return "Starts next to the key in auto?: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_STRATEGIES)) return "Auto strategies: "; 
+		else if (itemNum.equals(ItemIDs.AUTO_TIME_TO_SHOOT)) return "Time spent shooting: "; 
+		else if (itemNum.equals(ItemIDs.FUEL_FROM_THE_GROUND)) return "Can intake fuel from the ground?: "; 
+		else if (itemNum.equals(ItemIDs.GEARS_FROM_THE_GROUND)) return "Can intake gear from the ground?: "; 
+		else if (itemNum.equals(ItemIDs.HANDLE_GEARS)) return "Can handle gears in auto?: "; 
+		else if (itemNum.equals(ItemIDs.IS_ROBOT_FINISHED)) return "Is the robot finished?: "; 
+		else if (itemNum.equals(ItemIDs.MAX_FUEL_STORAGE)) return "Max fuel storage: "; 
+		else if (itemNum.equals(ItemIDs.SHOOTS_MULTIPLE_DIRECTIONS)) return "Can shoot in multiple directions?: "; 
+		else if (itemNum.equals(ItemIDs.TIME_TO_CLIMB)) return "Time required to climb: "; 
+		else if (itemNum.equals(ItemIDs.TIME_TO_EMPTY_STORAGE)) return "Time taken to empty all its storage: "; 
+		return ""; 
+	}
+	
 }

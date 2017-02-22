@@ -74,6 +74,9 @@ public class FileSystemWatcher {
  
 		// Initialize UI 
 		String[] buttons = {"Transfer to USB", "Read from USB"}; 
+		String num = JOptionPane.showInputDialog("Enter team number"); 
+		PrescoutingForm prescouting = visualizePrescoutingForm(getPrescoutingForm(Integer.parseInt(num))); 
+		prescouting.prescoutingFormVisualizer();
 		int response = JOptionPane.showOptionDialog(initializeUI(), "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
 		output("Ready");
 		if (response == JOptionPane.YES_OPTION)
@@ -451,6 +454,43 @@ public class FileSystemWatcher {
 			}
 		}
 		return resultSets;
+	}
+	
+	public static PrescoutingForm visualizePrescoutingForm(ResultSet[] resultSets)
+	{
+		String rawForm = ""; 
+		ResultSet identifyingInfo = resultSets[0]; 
+		try {
+			while (!identifyingInfo.isLast())
+			{
+				try {
+					rawForm += (identifyingInfo.getString(1)+"|");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet itemsCollection = resultSets[1]; 
+		try {
+			while (!itemsCollection.isLast())
+			{
+				try { 
+					rawForm += (itemsCollection.getInt(2)+", "+itemsCollection.getString(1)); 
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+		PrescoutingForm form = new PrescoutingForm(rawForm); 
+		return form; 
 	}
 	
 }
