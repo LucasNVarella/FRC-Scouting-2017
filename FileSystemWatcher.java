@@ -415,7 +415,7 @@ public class FileSystemWatcher {
 	} // End getConnection
 	
 	public static ResultSet[] getPrescoutingForm(int teamNum) {
-		ResultSet[] resultSets = new ResultSet[2];
+		ResultSet[] resultSets = new ResultSet[3];
 		if (!getConnection()) {
 			output("DB Broken!");
 		} else {
@@ -436,6 +436,15 @@ public class FileSystemWatcher {
 				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				stmt.executeQuery();
 				resultSets[1] = stmt.getResultSet();
+				stmt.close();
+			} catch (SQLException e) {
+				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+			}
+			sql = "SELECT ID, `Name`, DATATYPE_ID FROM scouting.item WHERE (scouting.item.`Active` = 1);";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				stmt.executeQuery();
+				resultSets[2] = stmt.getResultSet();
 				stmt.close();
 			} catch (SQLException e) {
 				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
