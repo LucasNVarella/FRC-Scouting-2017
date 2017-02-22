@@ -35,11 +35,11 @@ public class MatchForm extends Form {
 	}
 	
 	public MatchForm(int tabletNum, int teamNum, int matchNum, String scoutName) {
-		super(FormTypes.MATCH_FORM, tabletNum, teamNum, matchNum, scoutName);
+		super(FormType.MATCH_FORM, tabletNum, teamNum, matchNum, scoutName);
 	}
 	
 	public MatchForm(int reportID, int tabletNum, int teamNum, int matchNum, String scoutName) {
-		super(reportID, FormTypes.MATCH_FORM, tabletNum, teamNum, matchNum, scoutName);
+		super(reportID, FormType.MATCH_FORM, tabletNum, teamNum, matchNum, scoutName);
 	}
 	
 	public MatchForm(String rawForm) {

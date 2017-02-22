@@ -5,7 +5,7 @@ public class Form {
 	
 	private String rawForm;
 
-	private FormTypes formType;
+	private FormType formType;
 	private int tabletNum;
 	private int teamNum;
 	private int matchNum;
@@ -18,7 +18,7 @@ public class Form {
 	public static final String ITEM_DELIMITER = "|";
 	public static final String ID_DELIMITER = ",";
 	
-	public static enum FormTypes {
+	public static enum FormType {
 		PRESCOUTING_FORM, MATCH_FORM
 	}
 	
@@ -34,7 +34,7 @@ public class Form {
 		}
 	}
 	
-	public Form(FormTypes formType, int tabletNum, int teamNum, String scoutName) {
+	public Form(FormType formType, int tabletNum, int teamNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
@@ -45,7 +45,7 @@ public class Form {
 		this.rawForm = null;
 	}
 
-	public Form(FormTypes formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
+	public Form(FormType formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
@@ -56,7 +56,7 @@ public class Form {
 		this.rawForm = null;
 	}
 	
-	public Form(int reportID, FormTypes formType, int tabletNum, int teamNum, String scoutName) {
+	public Form(int reportID, FormType formType, int tabletNum, int teamNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
@@ -67,7 +67,7 @@ public class Form {
 		this.rawForm = null;
 	}
 
-	public Form(int reportID, FormTypes formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
+	public Form(int reportID, FormType formType, int tabletNum, int teamNum, int matchNum, String scoutName) {
 		this.formType = formType;
 		this.tabletNum = tabletNum;
 		this.teamNum = teamNum;
@@ -93,7 +93,7 @@ public class Form {
 		breakDownForm(this);
 	}
 
-	public FormTypes getFormType() {
+	public FormType getFormType() {
 		return formType;
 	}
 
@@ -117,7 +117,7 @@ public class Form {
 		this.matchNum = matchNum;
 	}
 
-	public void setFormType(FormTypes formType) {
+	public void setFormType(FormType formType) {
 		this.formType = formType;
 	}
 
@@ -194,8 +194,8 @@ public class Form {
 		if (rawForm != null) {
 			String[] items = rawForm.split("\\" + ITEM_DELIMITER);
 			int type = Integer.parseInt(items[FormOrder.FORM_TYPE]);
-			if (type == FormTypes.MATCH_FORM.ordinal()) form.setFormType(FormTypes.MATCH_FORM);
-			else if (type == FormTypes.PRESCOUTING_FORM.ordinal()) form.setFormType(FormTypes.PRESCOUTING_FORM);
+			if (type == FormType.MATCH_FORM.ordinal()) form.setFormType(FormType.MATCH_FORM);
+			else if (type == FormType.PRESCOUTING_FORM.ordinal()) form.setFormType(FormType.PRESCOUTING_FORM);
 			form.setTabletNum(Integer.parseInt(items[FormOrder.TABLET_NUM]));
 			form.setTeamNum(Integer.parseInt(items[FormOrder.TEAM_NUM]));
 			form.setScoutName(items[FormOrder.SCOUT_NAME]);
@@ -209,7 +209,7 @@ public class Form {
 		}
 	}
 	
-	private static Record[] breakDownRecords(String rawRecords, FormTypes type) {
+	private static Record[] breakDownRecords(String rawRecords, FormType type) {
 		ArrayList<Record> formRecords = new ArrayList<>();
 		String[] records = rawRecords.split("\\" + ITEM_DELIMITER);
 		for (String record : records) {

@@ -424,7 +424,7 @@ public class FileSystemWatcher {
 		} else {
 			int reportID = 0;
 			String sql = "SELECT ID, TabletNum, ScoutName, TeamNum FROM scouting.report WHERE (TeamNum = "
-							+ teamNum + ") AND (FormType = " + Form.FormTypes.PRESCOUTING_FORM.ordinal() + ")";
+							+ teamNum + ") AND (FormType = " + Form.FormType.PRESCOUTING_FORM.ordinal() + ")";
 			try {
 				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				stmt.executeQuery();

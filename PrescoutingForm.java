@@ -30,11 +30,11 @@ public class PrescoutingForm extends Form {
 	}
 
 	public PrescoutingForm(int tabletNum, int teamNum, String scoutNames) {
-		super(FormTypes.PRESCOUTING_FORM, tabletNum, teamNum, scoutNames);
+		super(FormType.PRESCOUTING_FORM, tabletNum, teamNum, scoutNames);
 	}
 	
 	public PrescoutingForm(int reportID, int tabletNum, int teamNum, String scoutNames) {
-		super(reportID, FormTypes.PRESCOUTING_FORM, tabletNum, teamNum, scoutNames);
+		super(reportID, FormType.PRESCOUTING_FORM, tabletNum, teamNum, scoutNames);
 	}
 	
 	public PrescoutingForm(String rawForm) {
