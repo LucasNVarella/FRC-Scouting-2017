@@ -16,5 +16,13 @@ public final class Record {
 	public int getItemID() {
 		return itemID;
 	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
+	}
 	
 }
