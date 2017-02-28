@@ -1,5 +1,37 @@
 public class PrescoutingForm extends Form {
 
+	public static final class Items {
+		public static final Item CAN_CLIMB = new Item(7, "Can climb?", Item.Datatype.INTEGER);
+		public static final Item COMMENTS = new Item(44, "Comments", Item.Datatype.STRING);
+		public static final Item DRIVE_TEAM_STUDENT_ONLY = new Item(46, "Drive Team Student Only?", Item.Datatype.INTEGER);
+		public static final Item FRIENDLINESS = new Item(48, "Friendliness", Item.Datatype.BOOLEAN);
+		public static final Item DRIVETRAIN_TYPE = new Item(58, "Drivetrain Type", Item.Datatype.OPTIONS);
+		public static final Item CODE_LANGUAGE_USED = new Item(59, "Code Language Used", Item.Datatype.OPTIONS);
+		public static final Item DESCRIPTION_OF_ROBOT = new Item(78, "Description Of Robot", Item.Datatype.STRING);
+		public static final Item RATE_DRIVING = new Item(79, "Rate driving", Item.Datatype.BOOLEAN);
+		public static final Item SHOOTS_HIGH = new Item(80, "Shoots High?", Item.Datatype.INTEGER);
+		public static final Item SHOOTS_LOW = new Item(81, "Shoots Low?", Item.Datatype.INTEGER);
+		public static final Item AUTO_HANDLE_GEARS = new Item(84, "Auto: Handle Gears?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_SHOOTS_HIGH = new Item(88, "Auto: Shoots High?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_SHOOTS_LOW = new Item(89, "Auto: Shoots Low?", Item.Datatype.BOOLEAN);
+		public static final Item HANDLE_GEARS = new Item(96, "Handle Gears?", Item.Datatype.BOOLEAN);
+		public static final Item IS_ROBOT_FINISHED = new Item(108, "Is Robot Finished?", Item.Datatype.BOOLEAN);
+		public static final Item GEARS_FROM_THE_GROUND = new Item(109, "Gears From The Ground?", Item.Datatype.BOOLEAN);
+		public static final Item FUEL_FROM_THE_GROUND = new Item(110, "Fuel From The Ground?", Item.Datatype.BOOLEAN);
+		public static final Item MAX_FUEL_STORAGE = new Item(111, "Max Fuel Storage", Item.Datatype.INTEGER);
+		public static final Item TIME_TO_EMPTY_STORAGE = new Item(112, "Time To Empty Storage", Item.Datatype.INTEGER);
+		public static final Item SHOOTS_MULTIPLE_DIRECTIONS = new Item(113, "Shoots Multiple Directions?", Item.Datatype.BOOLEAN);
+		public static final Item TIME_TO_CLIMB = new Item(114, "Time To Climb", Item.Datatype.INTEGER);
+		public static final Item AUTO = new Item(115, "Auto?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_STARTS_NEXT_TO_KEY = new Item(116, "Auto: Starts Next To Key?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_STARTS_NEXT_TO_BOILER = new Item(117, "Auto: Starts Next To Boiler?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_STARTS_CENTER = new Item(118, "Auto: Starts Center?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_STARTS_IN_LINE_LEFT_GEAR = new Item(119, "Auto: Starts In Line Left Gear?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_STARTS_IN_LINE_RIGHT_GEAR = new Item(120, "Auto: Starts In Line Right Gear?", Item.Datatype.BOOLEAN);
+		public static final Item AUTO_TIME_TO_SHOOT = new Item(121, "Auto: Time To Shoot", Item.Datatype.INTEGER);
+		public static final Item AUTO_STRATEGIES = new Item(122, "Auto: Strategies", Item.Datatype.STRING);
+	}
+	
 	public static final class ItemIDs {
 		public static final int CAN_CLIMB = 7;
 		public static final int COMMENTS = 44;
