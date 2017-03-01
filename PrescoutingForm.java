@@ -1,16 +1,16 @@
 public class PrescoutingForm extends Form {
 
 	public static final class Items {
-		public static final Item CAN_CLIMB = new Item(7, "Can climb?", Item.Datatype.INTEGER);
+		public static final Item CAN_CLIMB = new Item(7, "Can climb?", Item.Datatype.BOOLEAN);
 		public static final Item COMMENTS = new Item(44, "Comments", Item.Datatype.STRING);
-		public static final Item DRIVE_TEAM_STUDENT_ONLY = new Item(46, "Drive Team Student Only?", Item.Datatype.INTEGER);
-		public static final Item FRIENDLINESS = new Item(48, "Friendliness", Item.Datatype.BOOLEAN);
+		public static final Item DRIVE_TEAM_STUDENT_ONLY = new Item(46, "Drive Team Student Only?", Item.Datatype.BOOLEAN);
+		public static final Item FRIENDLINESS = new Item(48, "Friendliness", Item.Datatype.INTEGER);
 		public static final Item DRIVETRAIN_TYPE = new Item(58, "Drivetrain Type", Item.Datatype.OPTIONS);
 		public static final Item CODE_LANGUAGE_USED = new Item(59, "Code Language Used", Item.Datatype.OPTIONS);
 		public static final Item DESCRIPTION_OF_ROBOT = new Item(78, "Description Of Robot", Item.Datatype.STRING);
-		public static final Item RATE_DRIVING = new Item(79, "Rate driving", Item.Datatype.BOOLEAN);
-		public static final Item SHOOTS_HIGH = new Item(80, "Shoots High?", Item.Datatype.INTEGER);
-		public static final Item SHOOTS_LOW = new Item(81, "Shoots Low?", Item.Datatype.INTEGER);
+		public static final Item RATE_DRIVING = new Item(79, "Rate driving", Item.Datatype.INTEGER);
+		public static final Item SHOOTS_HIGH = new Item(80, "Shoots High?", Item.Datatype.BOOLEAN);
+		public static final Item SHOOTS_LOW = new Item(81, "Shoots Low?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_HANDLE_GEARS = new Item(84, "Auto: Handle Gears?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_SHOOTS_HIGH = new Item(88, "Auto: Shoots High?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_SHOOTS_LOW = new Item(89, "Auto: Shoots Low?", Item.Datatype.BOOLEAN);

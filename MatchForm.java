@@ -1,12 +1,12 @@
 public class MatchForm extends Form {
 	
 	public static final class Items {
-		public static final Item PRESENT = new Item(1, "Present", Item.Datatype.INTEGER);
-		public static final Item CAN_CLIMB = new Item(7, "Can climb?", Item.Datatype.INTEGER);
+		public static final Item PRESENT = new Item(1, "Present", Item.Datatype.BOOLEAN);
+		public static final Item CAN_CLIMB = new Item(7, "Can climb?", Item.Datatype.BOOLEAN);
 		public static final Item COMMENTS = new Item(44, "Comments", Item.Datatype.STRING);
-		public static final Item RATE_DRIVING = new Item(79, "Rate driving", Item.Datatype.BOOLEAN);
-		public static final Item SHOOTS_HIGH = new Item(80, "Shoots High?", Item.Datatype.INTEGER);
-		public static final Item SHOOTS_LOW = new Item(81, "Shoots Low?", Item.Datatype.INTEGER);
+		public static final Item RATE_DRIVING = new Item(79, "Rate driving", Item.Datatype.INTEGER);
+		public static final Item SHOOTS_HIGH = new Item(80, "Shoots High?", Item.Datatype.BOOLEAN);
+		public static final Item SHOOTS_LOW = new Item(81, "Shoots Low?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_HANDLE_GEARS = new Item(84, "Auto: Handle Gears?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_GEAR_SUCCESS = new Item(85, "Auto: Gear Success?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_GEAR_PLACEMENT = new Item(86, "Auto: Gear Placement", Item.Datatype.OPTIONS);

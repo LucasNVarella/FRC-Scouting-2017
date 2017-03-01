@@ -1,7 +1,7 @@
 public class Item {
 	
 	public enum Datatype {
-		BOOLEAN, INTEGER, STRING, OPTIONS
+		INTEGER, BOOLEAN, STRING, OPTIONS
 	}
 
 	private int id;
