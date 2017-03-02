@@ -10,7 +10,7 @@ public class MatchForm extends Form {
 		public static final Item AUTO_HANDLE_GEARS = new Item(84, "Auto: Handle Gears?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_GEAR_SUCCESS = new Item(85, "Auto: Gear Success?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_GEAR_PLACEMENT = new Item(86, "Auto: Gear Placement", Item.Datatype.OPTIONS);
-		public static final Item AUTO_PILOT_PERFORMANCE = new Item(87, "Auto: Pilot Performance?", Item.Datatype.OPTIONS);
+		public static final Item AUTO_PILOT_PERFORMANCE = new Item(87, "Auto: Pilot Performance?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_SHOOTS_HIGH = new Item(88, "Auto: Shoots High?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_SHOOTS_LOW = new Item(89, "Auto: Shoots Low?", Item.Datatype.BOOLEAN);
 		public static final Item AUTO_SHOT_MAKES = new Item(90, "Auto: Shot Makes", Item.Datatype.INTEGER);
@@ -33,37 +33,47 @@ public class MatchForm extends Form {
 		public static final Item RED_CARD = new Item(107, "Red Card?", Item.Datatype.BOOLEAN);
 	}
 	
-	public static final class ItemIDs {
-		public static final int PRESENT = 1;
-		public static final int CAN_CLIMB = 7;
-		public static final int COMMENTS = 44;
-		public static final int RATE_DRIVING = 79;
-		public static final int SHOOTS_HIGH = 80;
-		public static final int SHOOTS_LOW = 81;
-		public static final int AUTO_HANDLE_GEARS = 84;
-		public static final int AUTO_GEAR_SUCCESS = 85;
-		public static final int AUTO_GEAR_PLACEMENT = 86;
-		public static final int AUTO_PILOT_PERFORMANCE = 87;
-		public static final int AUTO_SHOOTS_HIGH = 88;
-		public static final int AUTO_SHOOTS_LOW = 89;
-		public static final int AUTO_SHOT_MAKES = 90;
-		public static final int AUTO_CROSS_BASELINE = 91;
-		public static final int STRATEGY = 92;
-		public static final int SHOOTING_SPEED = 93;
-		public static final int SHOTS_MADE = 94;
-		public static final int SHOOTER_ACCURACY = 95;
-		public static final int HANDLE_GEARS = 96;
-		public static final int PILOT_PERFORMANCE = 97;
-		public static final int GEAR_ATTEMPTS = 98;
-		public static final int GEAR_MAKES = 99;
-		public static final int ROTORS_SPINNING = 100;
-		public static final int CLIMB_SUCCESS = 101;
-		public static final int STAYS_PUT_WHEN_POWER_CUT = 102;
-		public static final int CLIMBING_SPEED = 103;
-		public static final int DID_THEY_BREAK_DOWN = 104;
-		public static final int FOUL_POINTS = 105;
-		public static final int YELLOW_CARD = 106;
-		public static final int RED_CARD = 107;
+	public static final class AUTO_GEAR_PLACEMENT {
+		public static final Option LEFT = new Option("Left", -1, 86);
+		public static final Option CENTER = new Option("Center", 0, 86);
+		public static final Option RIGHT = new Option("Right", 1, 86);
+	}
+	
+	public static final class STRATEGY {
+		public static final Option GEAR = new Option("Gear", 2, 92);
+		public static final Option FUEL = new Option("Fuel", 1, 92);
+		public static final Option DEFENSE = new Option("Defense", 0, 92);
+	}
+	
+	public static final class SHOOTING_SPEED {
+		public static final Option SLOW = new Option("Slow", 0, 93);
+		public static final Option MEDIUM = new Option("Medium", 1, 93);
+		public static final Option FAST = new Option("Fast", 2, 93);
+	}
+	
+	public static final class SHOTS_MADE {
+		public static final Option FROM_0_TO_30 = new Option("0-30", 0, 94);
+		public static final Option FROM_31_TO_60 = new Option("31-60", 1, 94);
+		public static final Option FROM_61_TO_90 = new Option("61-90", 2, 94);
+		public static final Option FROM_90 = new Option("90+", 3, 94);
+	}
+	
+	public static final class SHOOTER_ACCURACY {
+		public static final Option FROM_0_TO_25 = new Option("0-25%", 0, 95);
+		public static final Option FROM_26_TO_50 = new Option("26-50%", 1, 95);
+		public static final Option FROM_51_TO_75 = new Option("51-75%", 2, 95);
+		public static final Option FROM_76_TO_100 = new Option("76-100%", 3, 95);
+	}
+	
+	public static final class PILOT_PERFORMANCE {
+		public static final Option GOOD = new Option("Good", 1, 97);
+		public static final Option BAD = new Option("Bad", 0, 97);
+	}
+	
+	public static final class CLIMBING_SPEED {
+		public static final Option FAST = new Option("Fast", 2, 103);
+		public static final Option MEDIUM = new Option("Medium", 1, 103);
+		public static final Option SLOW = new Option("Slow", 0, 103);
 	}
 	
 	public MatchForm(int tabletNum, int teamNum, int matchNum, String scoutName) {

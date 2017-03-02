@@ -60,7 +60,20 @@ public class PrescoutingForm extends Form {
 		public static final int AUTO_TIME_TO_SHOOT = 121;
 		public static final int AUTO_STRATEGIES = 122;
 	}
+	
+	public static final class DRIVETRAIN_TYPE {
+		public static final Option PNEUMATIC = new Option("Pneumatic", 2, 58);
+		public static final Option SWERVE = new Option("Swerve", 3, 58);
+		public static final Option MECANUM = new Option("Mecanum", 1, 58);
+		public static final Option TANK = new Option("Tank", 0, 58);
+	}
 
+	public static final class CODE_LANGUAGE_USED {
+		public static final Option JAVA = new Option("Java", 2, 59);
+		public static final Option C = new Option("C++", 1, 59);
+		public static final Option LABVIEW = new Option("LabVIEW", 0, 59);
+	}
+	
 	public PrescoutingForm(int tabletNum, int teamNum, String scoutNames) {
 		super(FormType.PRESCOUTING_FORM, tabletNum, teamNum, scoutNames);
 	}
