@@ -9,7 +9,6 @@ public class Item {
 	private Datatype datatype;
 	
 	public Item(int id, String name, Datatype datatype) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.datatype = datatype;
@@ -25,6 +24,11 @@ public class Item {
 
 	public Datatype getDatatype() {
 		return datatype;
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 	
 }

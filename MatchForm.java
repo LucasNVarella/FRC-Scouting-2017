@@ -37,6 +37,7 @@ public class MatchForm extends Form {
 		public static final Option LEFT = new Option("Left", -1, 86);
 		public static final Option CENTER = new Option("Center", 0, 86);
 		public static final Option RIGHT = new Option("Right", 1, 86);
+		public static final Option NA = new Option("N/A", -2, 86);
 	}
 	
 	public static final class STRATEGY {
@@ -49,6 +50,7 @@ public class MatchForm extends Form {
 		public static final Option SLOW = new Option("Slow", 0, 93);
 		public static final Option MEDIUM = new Option("Medium", 1, 93);
 		public static final Option FAST = new Option("Fast", 2, 93);
+		public static final Option NA = new Option("N/A", -2, 93);
 	}
 	
 	public static final class SHOTS_MADE {
@@ -68,12 +70,14 @@ public class MatchForm extends Form {
 	public static final class PILOT_PERFORMANCE {
 		public static final Option GOOD = new Option("Good", 1, 97);
 		public static final Option BAD = new Option("Bad", 0, 97);
+		public static final Option NA = new Option("N/A", -2, 97);
 	}
 	
 	public static final class CLIMBING_SPEED {
 		public static final Option FAST = new Option("Fast", 2, 103);
 		public static final Option MEDIUM = new Option("Medium", 1, 103);
 		public static final Option SLOW = new Option("Slow", 0, 103);
+		public static final Option NA = new Option("N/A", -2, 103);
 	}
 	
 	public MatchForm(int tabletNum, int teamNum, int matchNum, String scoutName) {

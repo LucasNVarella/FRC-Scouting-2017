@@ -8,6 +8,12 @@ public final class Record {
 		this.value = value;
 		this.itemID = itemID;
 	}
+	
+	public Record(String value) {
+		String[] values = value.split(Form.ID_DELIMITER);
+		this.itemID = Integer.valueOf(values[0]);
+		this.value = values[1];
+	}
 
 	public String getValue() {
 		return value;
@@ -23,6 +29,11 @@ public final class Record {
 
 	public void setItemID(int itemID) {
 		this.itemID = itemID;
+	}
+	
+	@Override
+	public String toString() {
+		return itemID + Form.ID_DELIMITER + value;
 	}
 	
 }

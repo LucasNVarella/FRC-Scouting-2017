@@ -18,7 +18,7 @@ public class Form {
 	public static final String ITEM_DELIMITER = "|";
 	public static final String ID_DELIMITER = ",";
 	
-	public static enum FormType {
+	public enum FormType {
 		PRESCOUTING_FORM, MATCH_FORM
 	}
 	
@@ -205,7 +205,7 @@ public class Form {
 				if (i == 0) rawRecords += items[FormOrder.highestIndex()+i+1];
 				else rawRecords += ITEM_DELIMITER + items[FormOrder.highestIndex()+i+1];
 			}
-			form.addRecords(breakDownRecords(rawRecords, form.getFormType()));
+			if (!rawRecords.isEmpty()) form.addRecords(breakDownRecords(rawRecords, form.getFormType()));
 		}
 	}
 	
@@ -229,8 +229,7 @@ public class Form {
 			rawForm += teamNum + ITEM_DELIMITER;
 			rawForm += matchNum;
 			for (int i = 0; i < records.size(); i++)
-				rawForm += ITEM_DELIMITER + records.get(i).getItemID()
-							+ ID_DELIMITER + records.get(i).getValue();
+				rawForm += ITEM_DELIMITER + records.get(i).toString();
 			return rawForm;
 		}
 	}

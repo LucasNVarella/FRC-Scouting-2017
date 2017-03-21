@@ -38,12 +38,21 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JOptionPane;
 
 import static java.nio.file.StandardWatchEventKinds.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class FileSystemWatcher {
 
@@ -52,13 +61,13 @@ public class FileSystemWatcher {
 	final int MATCH_NUM_INDEX = 4;
 	final int TEAM_NUM_INDEX = 2;
 	final int TABLET_NUM_INDEX = 0;
-	final String Shreya_PW = "vanshika"; 
-	final String Shreya_user = "root"; 
-	final String Lucas_PW = "Lucas"; 
-	final String Lucas_user = "Lucas"; 
+	final String Shreya_PW = "vanshika";
+	final String Shreya_user = "root";
+	final String Lucas_PW = "Lucas";
+	final String Lucas_user = "Lucas";
 	final String Shreya_MySQL = "jdbc:mysql://localhost:3306/scouting?useSSL=false";
-	final String Lucas_MySQL = "jdbc:mysql://LucasPC:3306/scouting?useSSL=false"; 
-	final String Shreya_Desktop = "/Users/local/Desktop"; 
+	final String Lucas_MySQL = "jdbc:mysql://LucasPC:3306/scouting?useSSL=false";
+	final String Shreya_Desktop = "/Users/local/Desktop";
 
 	// The current string to display in the JFrame
 	private static String dispString = "";
@@ -68,40 +77,15 @@ public class FileSystemWatcher {
 	private static int lines;
 	private static JFrame frame;
 	private static JTextArea console;
+	private static FileSystemWatcher instance;
 
-	public static void main(String[] args) throws IOException 
-	{
- 
-		// Initialize UI 
-		String[] buttons = {"Transfer to USB", "Read from USB"}; 
-		String num = JOptionPane.showInputDialog("Enter team number"); 
-		PrescoutingForm prescouting = visualizePrescoutingForm(getPrescoutingForm(Integer.parseInt(num))); 
-		prescouting.prescoutingFormVisualizer();
-		int response = JOptionPane.showOptionDialog(initializeUI(), "Do you want to transfer to or read from the USB?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
-		output("Ready");
-		if (response == JOptionPane.YES_OPTION)
-		{
-			System.out.println("Transferring to USB");
-			checkFolderForFile(); 
-		}
-		else if (response == JOptionPane.NO_OPTION) 
-		{
-			System.out.println("Reading from a USB"); 
-			checkForUSBs();
-		}
-		else 
-		{
-			System.out.println("Error reading input"); 
-		}
-		
-
+	public static void main(String[] args) throws IOException {
+		instance = new FileSystemWatcher();
 	} // End main
 
-	public static void checkFolderForFile() 
-	{
-		System.out.println("Checking folder for file...");
-		output("Checking folder for file..."); 
-		
+	public static void checkFolderForFile() {
+		output("Checking folder for file...");
+
 		// the WatchService will continue to check for File System events until
 		// the program is closed.
 		// Look up WatchService for more info.
@@ -120,8 +104,7 @@ public class FileSystemWatcher {
 			try {
 				key = dir.register(watcher, ENTRY_CREATE);
 				key = watcher.take();
-				System.out.println("Found change..."); 
-				output("Found change..."); 
+				output("Found change...");
 			} catch (IOException | InterruptedException x) {
 				x.printStackTrace();
 			}
@@ -138,28 +121,66 @@ public class FileSystemWatcher {
 				WatchEvent<Path> ev = (WatchEvent<Path>) event;
 				Path filename = ev.context();
 
-				// Verify that the new file is a text file.
-//				try {
-//					// Resolve the filename against the directory.
-//					// This will indicate whether a new file found is a text
-//					// file.
-//					// Checks for extraneous new files in the monitored folder.
-//					// Look up resolving file names for more info.
-//					Path child = dir.resolve(filename);
-////					if (!Files.probeContentType(child).equals("text/plain")) {
-////						String message = String.format("New file '%s'" + " is not a plain text file.%n", filename);
-////						output(message);
-////					}
-//				} catch (IOException x) {
-//					System.err.println(x);
-//					continue;
-//				}
+				// // Verify that the new file is a text file.
+				// try {
+				// // Resolve the filename against the directory.
+				// // This will indicate whether a new file found is a text
+				// // file.
+				// // Checks for extraneous new files in the monitored folder.
+				// // Look up resolving file names for more info.
+				// Path child = dir.resolve(filename);
+				// if (!Files.probeContentType(child).equals("text/plain")) {
+				// String message = String.format("New file '%s'" + " is not a
+				// plain text file.%n", filename);
+				// output(message);
+				// }
+				// } catch (IOException x) {
+				// System.err.println(x);
+				// continue;
+				// }
 
 				// The tablets will always send all forms as a single line, to
 				// be contained in this string.
-				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"), filename.getFileName().toString());
+				File inputFile = new File(new File(System.getProperty("user.home"), "Desktop"),
+						filename.getFileName().toString());
 				writeToUSB(inputFile);
-				
+
+				String content = "";
+				try {
+					content = readFromFile(inputFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// We do not know how many forms will be present in the file.
+				// The next loop will read all of the forms it finds onto this
+				// array.
+				ArrayList<Form> forms = new ArrayList<>();
+				// A count of all forms present in this file.
+				// flag
+				boolean done = false;
+				while (!done) {
+					// double pipes delimit forms in the file.
+					int index = content.indexOf(Form.FORM_DELIMITER);
+					if (index == -1) {
+						done = true;
+						forms.add(new Form(content));
+					} else {
+						forms.add(new Form(content.substring(0, index)));
+						content = content.substring(index + 2);
+					}
+				}
+				// We now know the number of forms we've read.
+				// Now we will iterate through each item in each form
+				for (Form form : forms) {
+					try {
+						storeInDB(form);
+						conn.close();
+					} catch (SQLException ev1) {
+						ev1.printStackTrace();
+					}
+					output("File read successfully.");
+				}
 			}
 
 			// Reset the key -- this step is critical if you want to
@@ -173,31 +194,28 @@ public class FileSystemWatcher {
 
 		}
 	}
-	
-	public static void checkForUSBs() 
-	{
-		String outputFilePath = ""; 
-		while (outputFilePath.equals("")) 
-		{
-			outputFilePath = findMountedUSB(); 
+
+	public static void checkForUSBs() {
+		String outputFilePath = "";
+		while (outputFilePath.equals("")) {
+			outputFilePath = findMountedUSB();
 		}
-		File dir = new File(outputFilePath); 
-		File[] filesInUSB = dir.listFiles(); 
-		for (File file : filesInUSB) 
-		{
-			if (file.isFile()) processFileFromUSB(file); 
+		File dir = new File(outputFilePath);
+		File[] filesInUSB = dir.listFiles();
+		for (File file : filesInUSB) {
+			output(file.getName());
+			processFileFromUSB(file);
 		}
 	}
-	
-	public static void processFileFromUSB(File inputFile) 
-	{
-		String content="";
+
+	public static void processFileFromUSB(File inputFile) {
+		String content = "";
 		try {
 			content = readFromFile(inputFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		// We do not know how many forms will be present in the file.
 		// The next loop will read all of the forms it finds onto this
 		// array.
@@ -208,7 +226,8 @@ public class FileSystemWatcher {
 		while (!done) {
 			// double pipes delimit forms in the file.
 			int index = content.indexOf(Form.FORM_DELIMITER);
-			if (index == -1) done = true;
+			if (index == -1)
+				done = true;
 			else {
 				forms.add(new Form(content.substring(0, index)));
 				content = content.substring(index + 2);
@@ -226,9 +245,8 @@ public class FileSystemWatcher {
 			output("File read successfully.");
 		}
 	}
-	
-	public static JFrame initializeUI()
-	{
+
+	public FileSystemWatcher() {
 		// Initiating the UI
 		frame = new JFrame();
 		// intiating the frame
@@ -248,13 +266,35 @@ public class FileSystemWatcher {
 		console.setLocation(10, 10);
 		frame.add(console);
 		console.setVisible(true);
+		console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+			.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK), 
+					"get prescouting form");
+		console.getActionMap().put("get prescouting form",
+				new PrescoutingAction("get prescouting form", null, "gets a prescouting form",
+						KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
 		
-		return frame; 
+		// Initialize UI
+		String[] buttons = { "Read from Folder", "Read from USB" };
+		// String num = JOptionPane.showInputDialog("Enter team number");
+		// PrescoutingForm prescouting =
+		// visualizePrescoutingForm(getPrescoutingForm(Integer.parseInt(num)));
+		// prescouting.prescoutingFormVisualizer();
+		int response = JOptionPane.showOptionDialog(frame, "Do you want to transfer to or read from the USB?",
+				"Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, buttons[1]);
+		output("Ready");
+		if (response == JOptionPane.YES_OPTION) {
+			output("Reading from a Folder");
+			checkFolderForFile();
+		} else if (response == JOptionPane.NO_OPTION) {
+			output("Reading from a USB");
+			checkForUSBs();
+		} else {
+			output("Error reading input");
+		}
+		
 	}
-	
-	public static String findMountedUSB()
-	{
-		System.out.println("Finding mounted USBs...");
+
+	public static String findMountedUSB() {
 		output("Finding mounted USBs...");
 		// Finds USBs mounted
 		File files[] = File.listRoots();
@@ -263,33 +303,33 @@ public class FileSystemWatcher {
 		try {
 			for (File file : files) {
 				if (fsv.getSystemTypeDescription(file).equals("USB Drive"))
-						outputFilePath = file.getAbsolutePath();
-				}
+					outputFilePath = file.getAbsolutePath();
+			}
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
 			output("Failed to Find USB(s)");
-			System.out.println("Failed to find USB(s)"); 
 		}
-		return outputFilePath; 
+		return outputFilePath;
 	}
-	
-	public static void writeToUSB(File inputFile) 
-	{
-		String outputToFile = ""; 
-		String outputFilePath = findMountedUSB(); 
+
+	public static void writeToUSB(File inputFile) {
+		String outputToFile = "";
+		String outputFilePath = findMountedUSB();
 		// Creates file and checks if it is modifiable
-		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum);
+		File outputToUSB = new File(outputFilePath, "scoutingfile" + extFileNum + ".txt");
 		outputToUSB.setWritable(true);
 		try {
-			if (!outputToUSB.exists()) if (!outputToUSB.createNewFile()) throw new IOException();
+			if (!outputToUSB.exists())
+				if (!outputToUSB.createNewFile())
+					throw new IOException();
 			outputToFile = readFromFile(inputFile);
 		} catch (IOException e) {
 			output("Failed to create/use usb file");
 			e.printStackTrace();
 		}
-		
+
 		// Outputs the information to the file
-		System.out.println(outputToFile);
+		output(outputToFile);
 		try {
 			FileWriter outputInfoToUSBFile = new FileWriter(outputToUSB, false);
 			outputInfoToUSBFile.write(outputToFile);
@@ -299,47 +339,46 @@ public class FileSystemWatcher {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe);
 		}
-		
+		extFileNum++;
 	}
-	
-	public static void writeToDesktop(File inputFile) 
-	{
-		String outputToFile="";
+
+	public static void writeToDesktop(File inputFile) {
+		String outputToFile = "";
 		try {
 			outputToFile = readFromFile(inputFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		// Outputs the information to the file
-		System.out.println(outputToFile);
+		output(outputToFile);
 		try {
-			FileWriter outputInfoToUSBFile = new FileWriter(new File(System.getProperty("user.home"), "Desktop"), false);
+			FileWriter outputInfoToUSBFile = new FileWriter(new File(System.getProperty("user.home"), "Desktop"),
+					false);
 			outputInfoToUSBFile.write(outputToFile);
 			outputInfoToUSBFile.close();
-				} catch (FileNotFoundException ioe) {
-					System.err.println("FileNotFound: " + new File(System.getProperty("user.home"), "Desktop"));
-				} catch (IOException ioe) {
-					System.err.println("IOException: " + ioe);
-				}
+		} catch (FileNotFoundException ioe) {
+			System.err.println("FileNotFound: " + new File(System.getProperty("user.home"), "Desktop"));
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe);
+		}
 	}
-	
-	public static String readFromFile(File inputFile) throws IOException
-	{
-		Scanner in = new Scanner(inputFile); 
-		String content = ""; 
-		while (in.hasNextLine())
-		{
-			content += in.nextLine(); 
+
+	public static String readFromFile(File inputFile) throws IOException {
+		Scanner in = new Scanner(inputFile);
+		String content = "";
+		while (in.hasNextLine()) {
+			content += in.nextLine();
 		}
 		in.close();
 		return content;
 	}
-	
+
 	// method output() takes in a string to write it to the JFrame (the
 	// "console").
 	public static void output(String s) {
 
+		System.out.println(s);
 		dispString += s + "%n";
 
 		if (lines < 48) {
@@ -354,7 +393,7 @@ public class FileSystemWatcher {
 	} // End output
 
 	public static void storeInDB(Form form) throws SQLException {
-		
+
 		if (!getConnection()) {
 			output("DB broken!");
 		} else {
@@ -405,7 +444,7 @@ public class FileSystemWatcher {
 		boolean connected = false;
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://LucasPC:3306/scouting?useSSL=false", "lucas", "lucas");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scouting?useSSL=false", "lucas", "lucas");
 			output("Connected to database");
 			connected = true;
 		} catch (SQLException e) {
@@ -416,81 +455,107 @@ public class FileSystemWatcher {
 		return connected;
 
 	} // End getConnection
-	
+
 	public static ResultSet[] getPrescoutingForm(int teamNum) {
 		ResultSet[] resultSets = new ResultSet[3];
 		if (!getConnection()) {
 			output("DB Broken!");
 		} else {
 			int reportID = 0;
-			String sql = "SELECT ID, TabletNum, ScoutName, TeamNum FROM scouting.report WHERE (TeamNum = "
-							+ teamNum + ") AND (FormType = " + Form.FormType.PRESCOUTING_FORM.ordinal() + ")";
+			String sql = "SELECT ID, TabletNum, ScoutName, TeamNum FROM scouting.report WHERE (TeamNum = " + teamNum
+					+ ") AND (FormType = " + Form.FormType.PRESCOUTING_FORM.ordinal() + ")";
 			try {
-				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY);
 				stmt.executeQuery();
 				resultSets[0] = stmt.getResultSet();
+				resultSets[0].first();
 				reportID = resultSets[0].getInt(1);
-				stmt.close();
 			} catch (SQLException e) {
-				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+				output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+				return null;
 			}
 			sql = "SELECT `Value`, ITEM_ID FROM scouting.record WHERE (REPORT_ID = " + reportID + ")";
 			try {
-				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY);
 				stmt.executeQuery();
 				resultSets[1] = stmt.getResultSet();
-				stmt.close();
 			} catch (SQLException e) {
-				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+				output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+				return null;
 			}
 			sql = "SELECT ID, `Name`, DATATYPE_ID FROM scouting.item WHERE (scouting.item.`Active` = 1);";
 			try {
-				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY);
 				stmt.executeQuery();
 				resultSets[2] = stmt.getResultSet();
-				stmt.close();
 			} catch (SQLException e) {
-				output(e.getMessage() + "%n error code:" + e.getErrorCode() + "%n sql state:" + e.getSQLState());
+				output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+				return null;
 			}
 		}
 		return resultSets;
 	}
-	
-	public static PrescoutingForm visualizePrescoutingForm(ResultSet[] resultSets)
-	{
-		String rawForm = ""; 
-		ResultSet identifyingInfo = resultSets[0]; 
+
+	public static PrescoutingForm visualizePrescoutingForm(ResultSet[] resultSets) {
+		if (resultSets == null) return null;
+		String rawForm = "";
+		ResultSet identifyingInfo = resultSets[0];
 		try {
-			while (!identifyingInfo.isLast())
-			{
-				try {
-					rawForm += (identifyingInfo.getString(1)+"|");
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
+			identifyingInfo.first();
+			try {
+				rawForm += (identifyingInfo.getString(1) + "|" + identifyingInfo.getString(2) + "|" + identifyingInfo.getString(3) + "|"
+							+ identifyingInfo.getString(4) + "|");
+				rawForm += "-1";
+				identifyingInfo.next();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ResultSet itemsCollection = resultSets[1]; 
+		ResultSet itemsCollection = resultSets[1];
 		try {
-			while (!itemsCollection.isLast())
-			{
-				try { 
-					rawForm += (itemsCollection.getInt(2)+", "+itemsCollection.getString(1)); 
-				}
-				catch (SQLException e) {
+			itemsCollection.first();
+			while (!itemsCollection.isAfterLast()) {
+				try {
+					rawForm += ("|" + itemsCollection.getInt(2) + "," + itemsCollection.getString(1));
+					itemsCollection.next();
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		catch (SQLException e) {
-			e.printStackTrace(); 
-		}
-		
-		PrescoutingForm form = new PrescoutingForm(rawForm); 
-		return form; 
+		PrescoutingForm form = new PrescoutingForm(rawForm);
+		return form;
 	}
 	
+	public class PrescoutingAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		public PrescoutingAction (String text, ImageIcon icon, String desc, Integer mnemonic) {
+	        super(text, icon);
+	        putValue(SHORT_DESCRIPTION, desc);
+	        putValue(MNEMONIC_KEY, mnemonic);
+	    }
+	    public void actionPerformed(ActionEvent e) {
+	    	String teamNumber = JOptionPane.showInputDialog("Please input a team number.");
+	    	int teamNum = 0;
+	    	try {
+	    		teamNum = Integer.parseInt(teamNumber);
+	    		PrescoutingForm form = 
+		    			visualizePrescoutingForm(getPrescoutingForm(teamNum));
+		    	if (form != null) form.prescoutingFormVisualizer();
+		    	else output("Team/Form not found.");
+	    	} catch (NumberFormatException e1) {
+	    		output("Invalid team number.");
+	    	}
+	    }
+	}
+
 }

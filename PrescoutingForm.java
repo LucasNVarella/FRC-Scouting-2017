@@ -88,15 +88,15 @@ public class PrescoutingForm extends Form {
 	
 	public void prescoutingFormVisualizer() {
 		
-		String[] items = getRawForm().split("|"); 
+		String[] items = getRawForm().split("\\|"); 
 		String[] identifyingInfo = new String[5]; 
-		for (int i = 0; i < 6; i++) 
+		for (int i = 0; i < identifyingInfo.length; i++) 
 		{
 			identifyingInfo[i] = items[i]; 
 		}
 		
 		String[] formItems = new String[26];
-		for (int k = 0; k < 27; k++) 
+		for (int k = 0; k < formItems.length; k++) 
 		{
 			for (int i = 6; i < 33; i++) 
 			{
@@ -122,7 +122,7 @@ public class PrescoutingForm extends Form {
 		String returnString = ""; 
 		for (int i = 0; i < formItems.length; i++) 
 		{
-			String[] itemInfo = formItems[i].split(","); 
+			String[] itemInfo = formItems[i].split("\\,"); 
 			returnString += identifyItem(itemInfo[0])+itemInfo[1]+"\n"; 
 		}
 		System.out.println(returnString);
