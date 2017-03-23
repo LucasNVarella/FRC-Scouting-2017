@@ -266,12 +266,14 @@ public class FileSystemWatcher {
         console.setLocation(10, 10);
         frame.add(console);
         console.setVisible(true);
-        console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-        .put(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK),
+        console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK),
              "get prescouting form");
-        console.getActionMap().put("get prescouting form",
-                                   new PrescoutingAction("get prescouting form", null, "gets a prescouting form",
-                                                         KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+        console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK),
+                "get average form");
+        console.getActionMap().put("get prescouting form", new PrescoutingAction("get prescouting form", null,
+        		"gets a prescouting form", KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+        console.getActionMap().put("get average form", new AverageAction("get average form", null,
+        		"gets an average form", KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
         
         // Initialize UI
         String[] buttons = { "Read from Folder", "Read from USB" };
@@ -379,16 +381,21 @@ public class FileSystemWatcher {
     public static void output(String s) {
         
         System.out.println(s);
-        dispString += s + "%n";
-        
-        if (lines < 48) {
+        dispString += s + "\n";
+        String[] array = dispString.split("\n");
+        lines = array.length;
+        if (lines < 50) {
             lines++;
         } else {
-            int loc = dispString.indexOf("%n");
-            dispString = dispString.substring(loc + 2);
+        	lines = 0;
+        	dispString = "";
+            for (int i = array.length-1; i >= array.length-50; i--) {
+            	dispString = array[i] + "\n" + dispString;
+            	lines++;
+            }
         }
         
-        console.setText(String.format(dispString));
+        console.setText(dispString);
         
     } // End output
     
@@ -506,7 +513,7 @@ public class FileSystemWatcher {
         try {
             identifyingInfo.first();
             try {
-                rawForm += (identifyingInfo.getString(1) + "|" + identifyingInfo.getString(2) + "|" + identifyingInfo.getString(3) + "|"
+                rawForm += (identifyingInfo.getString(2) + "|" + identifyingInfo.getString(3) + "|"
                             + identifyingInfo.getString(4) + "|");
                 rawForm += "-1";
                 identifyingInfo.next();
@@ -536,6 +543,36 @@ public class FileSystemWatcher {
         return form;
     }
     
+    public static ResultSet[] getAverageForm(int teamNum) {
+        ResultSet[] resultSets = new ResultSet[2];
+        if (!getConnection()) {
+            output("DB Broken!");
+        } else {
+            int reportID = 0;
+            String sql = "CALL procAverages(" + teamNum + ")";
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
+                stmt.executeQuery();
+                resultSets[0] = stmt.getResultSet();
+            } catch (SQLException e) {
+                output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+                return null;
+            }
+            sql = "CALL procProportions(" + teamNum + ")";
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
+                stmt.executeQuery();
+                resultSets[1] = stmt.getResultSet();
+            } catch (SQLException e) {
+                output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+                return null;
+            }
+        }
+        return resultSets;
+    }
+    
     public class PrescoutingAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         public PrescoutingAction (String text, ImageIcon icon, String desc, Integer mnemonic) {
@@ -551,6 +588,28 @@ public class FileSystemWatcher {
                 PrescoutingForm form = 
                 visualizePrescoutingForm(getPrescoutingForm(teamNum));
                 if (form != null) output(form.prescoutingFormVisualizer());
+                else output("Team/Form not found.");
+            } catch (NumberFormatException e1) {
+                output("Invalid team number.");
+            }
+        }
+    }
+    
+    public class AverageAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+        public AverageAction (String text, ImageIcon icon, String desc, Integer mnemonic) {
+            super(text, icon);
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(MNEMONIC_KEY, mnemonic);
+        }
+        public void actionPerformed(ActionEvent e) {
+            String teamNumber = JOptionPane.showInputDialog("Please input a team number.");
+            int teamNum = 0;
+            try {
+                teamNum = Integer.parseInt(teamNumber);
+                MatchForm form = 
+                visualizeAverageForm(getAverageForm(teamNum));
+                if (form != null) output(form.averageFormVisualizer());
                 else output("Team/Form not found.");
             } catch (NumberFormatException e1) {
                 output("Invalid team number.");
