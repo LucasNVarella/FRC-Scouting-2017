@@ -267,13 +267,13 @@ public class FileSystemWatcher {
         frame.add(console);
         console.setVisible(true);
         console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK),
-             "get prescouting form");
+                                                                   "get prescouting form");
         console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK),
-                "get average form");
+                                                                   "get average form");
         console.getActionMap().put("get prescouting form", new PrescoutingAction("get prescouting form", null,
-        		"gets a prescouting form", KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+                                                                                 "gets a prescouting form", KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
         console.getActionMap().put("get average form", new AverageAction("get average form", null,
-        		"gets an average form", KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+                                                                         "gets an average form", KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
         
         // Initialize UI
         String[] buttons = { "Read from Folder", "Read from USB" };
@@ -387,11 +387,11 @@ public class FileSystemWatcher {
         if (lines < 50) {
             lines++;
         } else {
-        	lines = 0;
-        	dispString = "";
+            lines = 0;
+            dispString = "";
             for (int i = array.length-1; i >= array.length-50; i--) {
-            	dispString = array[i] + "\n" + dispString;
-            	lines++;
+                dispString = array[i] + "\n" + dispString;
+                lines++;
             }
         }
         
@@ -573,6 +573,60 @@ public class FileSystemWatcher {
         return resultSets;
     }
     
+    public static String visualizeAverageForm(ResultSet[] resultSets)
+    {
+        ResultSet averages = resultSets[0];
+        ArrayList<Integer> itemIDs = new ArrayList<Integer>();
+        ArrayList<Double> averageVals = new ArrayList<Double>();
+        ArrayList<Double> standardDevs = new ArrayList<Double>();
+        ArrayList<Integer> sampleSizes = new ArrayList<Integer>();
+        try {
+            averages.first();
+            while (!averages.isAfterLast())
+            {
+                itemIDs.add(averages.getInt(0));
+                averageVals.add(averages.getDouble(1));
+                standardDevs.add(averages.getDouble(2));
+                sampleSizes.add(averages.getInt(3));
+                averages.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        ResultSet proportions = resultSets[1];
+        ArrayList<Integer> itemsIDs = new ArrayList<Integer>();
+        ArrayList<Integer> sums = new ArrayList<Integer>();
+        ArrayList<Integer> samplesSizes = new ArrayList<Integer>();
+        ArrayList<Integer> successRates = new ArrayList<Integer>();
+        try {
+            proportions.first();
+            while (!proportions.isAfterLast())
+            {
+                itemsIDs.add(proportions.getInt(0));
+                sums.add(proportions.getInt(1));
+                samplesSizes.add(proportions.getInt(2));
+                successRates.add(proportions.getInt(3));
+                proportions.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        String rawData = "";
+        for (int i = 0; i < itemIDs.size(); i++)
+        {
+            rawData += itemIDs.get(i) + " " + averageVals.get(i) + standardDevs.get(i) + " " + sampleSizes.get(i) + "||";
+        }
+        rawData += "##";
+        for (int i = 0; i < itemsIDs.size(); i++)
+        {
+            rawData += itemsIDs.get(i) + " " + sums.get(i) + " " + samplesSizes.get(i) + " " + successRates.get(i) + "||";
+        }
+        
+        return rawData;
+    }
+    
     public class PrescoutingAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         public PrescoutingAction (String text, ImageIcon icon, String desc, Integer mnemonic) {
@@ -585,7 +639,7 @@ public class FileSystemWatcher {
             int teamNum = 0;
             try {
                 teamNum = Integer.parseInt(teamNumber);
-                PrescoutingForm form = 
+                PrescoutingForm form =
                 visualizePrescoutingForm(getPrescoutingForm(teamNum));
                 if (form != null) output(form.prescoutingFormVisualizer());
                 else output("Team/Form not found.");
@@ -607,9 +661,9 @@ public class FileSystemWatcher {
             int teamNum = 0;
             try {
                 teamNum = Integer.parseInt(teamNumber);
-                MatchForm form = 
+                String form = 
                 visualizeAverageForm(getAverageForm(teamNum));
-                if (form != null) output(form.averageFormVisualizer());
+                if (form != null) output(MatchForm.averageFormVisualizer(form));
                 else output("Team/Form not found.");
             } catch (NumberFormatException e1) {
                 output("Invalid team number.");
