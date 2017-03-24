@@ -111,14 +111,14 @@ public class MatchForm extends Form {
     public static String averageFormVisualizer(String rawData)
     {
         String visualizedForm = "";
-        String[] rawDataParts = rawData.split("##");
+        String[] rawDataParts = rawData.split("\\##");
         String averages = rawDataParts[0];
         String proportions = rawDataParts[1];
         
-        String[] itemAvgs = averages.split("\\||");
+        String[] itemAvgs = averages.split("\\" + Form.ITEM_DELIMITER);
         for (String itemAvg : itemAvgs)
         {
-            String[] avgParts = itemAvg.split(" ");
+            String[] avgParts = itemAvg.split("\\,");
             for (Item i : MatchForm.matchItems)
             {
                 if (Integer.parseInt(avgParts[0]) == i.getId())
@@ -133,10 +133,10 @@ public class MatchForm extends Form {
             
         }
         
-        String[] itemProps = proportions.split("\\||"); 
+        String[] itemProps = proportions.split("\\|"); 
         for (String itemProp : itemProps) 
         {
-            String[] propParts = itemProp.split(" "); 
+            String[] propParts = itemProp.split("\\,"); 
             for (Item i : MatchForm.matchItems)
             {
                 if (Integer.parseInt(propParts[0]) == i.getId()) 

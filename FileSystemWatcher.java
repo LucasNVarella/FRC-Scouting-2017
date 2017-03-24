@@ -548,7 +548,6 @@ public class FileSystemWatcher {
         if (!getConnection()) {
             output("DB Broken!");
         } else {
-            int reportID = 0;
             String sql = "CALL procAverages(" + teamNum + ")";
             try {
                 PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -564,6 +563,7 @@ public class FileSystemWatcher {
                 PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                                ResultSet.CONCUR_READ_ONLY);
                 stmt.executeQuery();
+                stmt.getMoreResults();
                 resultSets[1] = stmt.getResultSet();
             } catch (SQLException e) {
                 output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
@@ -584,10 +584,10 @@ public class FileSystemWatcher {
             averages.first();
             while (!averages.isAfterLast())
             {
-                itemIDs.add(averages.getInt(0));
-                averageVals.add(averages.getDouble(1));
-                standardDevs.add(averages.getDouble(2));
-                sampleSizes.add(averages.getInt(3));
+                itemIDs.add(averages.getInt(1));
+                averageVals.add(averages.getDouble(2));
+                standardDevs.add(averages.getDouble(3));
+                sampleSizes.add(averages.getInt(4));
                 averages.next();
             }
         } catch (SQLException e) {
@@ -603,10 +603,10 @@ public class FileSystemWatcher {
             proportions.first();
             while (!proportions.isAfterLast())
             {
-                itemsIDs.add(proportions.getInt(0));
-                sums.add(proportions.getInt(1));
-                samplesSizes.add(proportions.getInt(2));
-                successRates.add(proportions.getInt(3));
+                itemsIDs.add(proportions.getInt(1));
+                sums.add(proportions.getInt(2));
+                samplesSizes.add(proportions.getInt(3));
+                successRates.add(proportions.getInt(4));
                 proportions.next();
             }
         } catch (SQLException e) {
@@ -616,12 +616,12 @@ public class FileSystemWatcher {
         String rawData = "";
         for (int i = 0; i < itemIDs.size(); i++)
         {
-            rawData += itemIDs.get(i) + " " + averageVals.get(i) + standardDevs.get(i) + " " + sampleSizes.get(i) + "||";
+            rawData += itemIDs.get(i) + "," + averageVals.get(i) + "," + standardDevs.get(i) + "," + sampleSizes.get(i) + "|";
         }
         rawData += "##";
         for (int i = 0; i < itemsIDs.size(); i++)
         {
-            rawData += itemsIDs.get(i) + " " + sums.get(i) + " " + samplesSizes.get(i) + " " + successRates.get(i) + "||";
+            rawData += itemsIDs.get(i) + "," + sums.get(i) + "," + samplesSizes.get(i) + "," + successRates.get(i) + "|";
         }
         
         return rawData;
