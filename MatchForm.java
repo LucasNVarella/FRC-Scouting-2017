@@ -40,13 +40,13 @@ public class MatchForm extends Form {
     MatchForm.Items.AUTO_SHOOTS_LOW, MatchForm.Items.AUTO_SHOT_MAKES,
     MatchForm.Items.CAN_CLIMB, MatchForm.Items.CLIMB_SUCCESS, MatchForm.Items.CLIMBING_SPEED,
     MatchForm.Items.COMMENTS, MatchForm.Items.DID_THEY_BREAK_DOWN, MatchForm.Items.FOUL_POINTS,
-    MatchForm.Items.FOUL_POINTS, MatchForm.Items.GEAR_ATTEMPTS, MatchForm.Items.GEAR_ATTEMPTS,
+    MatchForm.Items.FOUL_POINTS, MatchForm.Items.GEAR_ATTEMPTS,
     MatchForm.Items.GEAR_MAKES, MatchForm.Items.HANDLE_GEARS, MatchForm.Items.PILOT_PERFORMANCE,
     MatchForm.Items.PRESENT, MatchForm.Items.RATE_DRIVING, MatchForm.Items.RED_CARD,
     MatchForm.Items.ROTORS_SPINNING, MatchForm.Items.SHOOTER_ACCURACY,
     MatchForm.Items.SHOOTING_SPEED, MatchForm.Items.SHOOTS_HIGH, MatchForm.Items.SHOOTS_LOW,
     MatchForm.Items.SHOTS_MADE, MatchForm.Items.STAYS_PUT_WHEN_POWER_CUT, MatchForm.Items.STRATEGY,
-    MatchForm.Items.YELLOW_CARD
+    MatchForm.Items.YELLOW_CARD, MatchForm.Items.RED_CARD
     };
     
     public static final class AUTO_GEAR_PLACEMENT {
@@ -119,13 +119,16 @@ public class MatchForm extends Form {
         for (String itemAvg : itemAvgs)
         {
             String[] avgParts = itemAvg.split("\\,");
+            boolean matchScouting = false;
             for (Item i : MatchForm.matchItems)
             {
                 if (Integer.parseInt(avgParts[0]) == i.getId())
                 {
                     visualizedForm += i.getName() + ": ";
+                    matchScouting = true;
                 }
             }
+            if (!matchScouting) continue;
             visualizedForm += avgParts[1] + "\n";
             visualizedForm += "Standard Deviation: " + avgParts[2] + "\n";
             visualizedForm += "Sample Size: " + avgParts[3] + "\n"; 
@@ -136,19 +139,23 @@ public class MatchForm extends Form {
         String[] itemProps = proportions.split("\\|"); 
         for (String itemProp : itemProps) 
         {
-            String[] propParts = itemProp.split("\\,"); 
+            String[] propParts = itemProp.split("\\,");
+            boolean matchScouting = false;
             for (Item i : MatchForm.matchItems)
             {
                 if (Integer.parseInt(propParts[0]) == i.getId()) 
                 {
-                    visualizedForm += i.getName() + ": "; 
+                    visualizedForm += i.getName() + ": ";
+                    matchScouting = true;
                 }
             }
+            if (!matchScouting) continue;
             visualizedForm += propParts[1] + "\n"; 
             visualizedForm += "Sample Size: " + propParts[2] + "\n"; 
             visualizedForm += "Success Rate: " + propParts[3] + "\n"; 
             visualizedForm += "\n"; 
         }
+        
         return visualizedForm; 
     }
     

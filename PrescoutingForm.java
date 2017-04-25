@@ -81,7 +81,7 @@ public class PrescoutingForm extends Form {
     
     public String prescoutingFormVisualizer() {
         
-        String visualizedForm = "";
+        String visualizedForm = "\n";
         String[] items = getRawForm().split("\\|");
         String[] identifyingInfo = new String[5];
         for (int i = 0; i < identifyingInfo.length; i++)

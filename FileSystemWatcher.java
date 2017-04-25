@@ -48,6 +48,7 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -264,16 +265,25 @@ public class FileSystemWatcher {
         console.setLineWrap(true);
         console.setSize(945, 805);
         console.setLocation(10, 10);
-        frame.add(console);
         console.setVisible(true);
         console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK),
                                                                    "get prescouting form");
         console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK),
                                                                    "get average form");
+        console.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK),
+                													"get team comments");
         console.getActionMap().put("get prescouting form", new PrescoutingAction("get prescouting form", null,
                                                                                  "gets a prescouting form", KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
         console.getActionMap().put("get average form", new AverageAction("get average form", null,
                                                                          "gets an average form", KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+        console.getActionMap().put("get team comments", new CommentAction("get team comments", null,
+                "gets all comments for a team", KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK).getKeyCode()));
+        
+        JScrollPane scroll = new JScrollPane(console);
+        scroll.setFocusable(true);
+        scroll.setSize(945, 805);
+        scroll.setLocation(10, 10);
+        frame.add(scroll);
         
         // Initialize UI
         String[] buttons = { "Read from Folder", "Read from USB" };
@@ -384,12 +394,12 @@ public class FileSystemWatcher {
         dispString += s + "\n";
         String[] array = dispString.split("\n");
         lines = array.length;
-        if (lines < 50) {
+        if (lines < 148) {
             lines++;
         } else {
             lines = 0;
             dispString = "";
-            for (int i = array.length-1; i >= array.length-50; i--) {
+            for (int i = array.length-1; i >= array.length-148; i--) {
                 dispString = array[i] + "\n" + dispString;
                 lines++;
             }
@@ -506,6 +516,26 @@ public class FileSystemWatcher {
         return resultSets;
     }
     
+    public static ResultSet getTeamComments(int teamNum) 
+    {
+    	ResultSet comments = null; 
+    	if (!getConnection()) {
+            output("DB Broken!");
+        } else {
+        	String sql = "CALL scouting.procComments(" + teamNum + ")";
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
+                stmt.executeQuery();
+                comments = stmt.getResultSet();
+            } catch (SQLException e) {
+                output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
+                return null;
+            }
+        }
+    	return comments;
+    }
+    
     public static PrescoutingForm visualizePrescoutingForm(ResultSet[] resultSets) {
         if (resultSets == null) return null;
         String rawForm = String.valueOf(Form.FormType.PRESCOUTING_FORM.ordinal())+"|";
@@ -548,7 +578,7 @@ public class FileSystemWatcher {
         if (!getConnection()) {
             output("DB Broken!");
         } else {
-            String sql = "CALL procAverages(" + teamNum + ")";
+            String sql = "CALL scouting.procAverages(" + teamNum + ")";
             try {
                 PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                                ResultSet.CONCUR_READ_ONLY);
@@ -558,7 +588,7 @@ public class FileSystemWatcher {
                 output(e.getMessage() + " error code:" + e.getErrorCode() + " sql state:" + e.getSQLState());
                 return null;
             }
-            sql = "CALL procProportions(" + teamNum + ")";
+            sql = "CALL scouting.procProportions(" + teamNum + ")";
             try {
                 PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                                ResultSet.CONCUR_READ_ONLY);
@@ -573,9 +603,39 @@ public class FileSystemWatcher {
         return resultSets;
     }
     
+    public static void visualizeTeamComments(ResultSet comments) 
+    {
+    	ArrayList<String> commentBlocks = new ArrayList<String>(); 
+        try {
+        	comments.first(); 
+        	while (!comments.isAfterLast())
+        	{
+        		commentBlocks.add(comments.getString(1)); 
+        		comments.next(); 
+        	}
+        }
+        catch(SQLException e) { 
+        	e.printStackTrace();
+        }
+        
+        String commentData = ""; 
+        for (String comment: commentBlocks) 
+        {
+        	commentData += comment + "\n";
+        }
+        
+        output("Comments: "+"\n"+commentData); 
+    }
+    
     public static String visualizeAverageForm(ResultSet[] resultSets)
     {
         ResultSet averages = resultSets[0];
+        try {
+			if (!averages.first()) return null;
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         ArrayList<Integer> itemIDs = new ArrayList<Integer>();
         ArrayList<Double> averageVals = new ArrayList<Double>();
         ArrayList<Double> standardDevs = new ArrayList<Double>();
@@ -613,6 +673,8 @@ public class FileSystemWatcher {
             e.printStackTrace();
         }
         
+        
+        
         String rawData = "";
         for (int i = 0; i < itemIDs.size(); i++)
         {
@@ -623,7 +685,6 @@ public class FileSystemWatcher {
         {
             rawData += itemsIDs.get(i) + "," + sums.get(i) + "," + samplesSizes.get(i) + "," + successRates.get(i) + "|";
         }
-        
         return rawData;
     }
     
@@ -669,6 +730,25 @@ public class FileSystemWatcher {
                 output("Invalid team number.");
             }
         }
+    }
+    
+    public class CommentAction extends AbstractAction { 
+    	private static final long serialVersionUID = 1L; 
+    	public CommentAction(String text, ImageIcon icon, String desc, Integer mnemonic) { 
+    		super(text, icon); 
+    		putValue(SHORT_DESCRIPTION, desc); 
+    		putValue(MNEMONIC_KEY, mnemonic); 
+    	}
+    	public void actionPerformed(ActionEvent e) {
+    		String teamNumber = JOptionPane.showInputDialog("Please input a team number."); 
+    		int teamNum = 0; 
+    		try {
+    			teamNum = Integer.parseInt(teamNumber); 
+    			visualizeTeamComments(getTeamComments(teamNum));
+            } catch (NumberFormatException e1) {
+                output("Invalid team number.");
+            }
+    	}
     }
     
 }
