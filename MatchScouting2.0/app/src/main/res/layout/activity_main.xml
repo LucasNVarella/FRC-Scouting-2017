@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.lucas.matchscouting20.MainActivity"
+    android:background="#7ec0ee">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:id="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="314.962dp"
+        android:layout_marginLeft="5dp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:id="@+id/view2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="314.962dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:text="Basics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblBasics"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp"
+        android:paddingLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txtMatchNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/lblTeamNumber"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblMatchNumber"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3"
+        android:nextFocusDown="@+id/txtTeamNumber"
+        android:nextFocusForward="@+id/txtTeamNumber"
+        android:nextFocusRight="@+id/chooseName" />
+
+    <TextView
+        android:text="Match Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblMatchNumber"
+        android:layout_below="@+id/lblBasics"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/chooseName"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtMatchNumber"
+        android:layout_marginStart="29dp"
+        android:layout_toEndOf="@+id/txtMatchNumber"
+        android:background="#ffffff"
+        android:dropDownWidth="wrap_content"
+        android:nextFocusForward="@+id/txtTeamNumber"
+        android:nextFocusLeft="@+id/txtMatchNumber"
+        android:nextFocusRight="@+id/radTeleopStrategyGear"
+        android:nextFocusDown="@+id/chkShow"
+        android:spinnerMode="dropdown"
+        />
+
+    <TextView
+        android:id="@+id/lblScouterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblMatchNumber"
+        android:layout_alignBottom="@+id/lblMatchNumber"
+        android:layout_alignStart="@+id/chooseName"
+        android:text="Scout Name"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:text="Team Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeamNumber"
+        android:layout_below="@+id/txtMatchNumber"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txtTeamNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtMatchNumber"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblTeamNumber"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="4"
+        android:nextFocusForward="@+id/chkShow"
+        android:nextFocusRight="@+id/chkShow"
+        android:nextFocusUp="@+id/txtMatchNumber"
+        android:nextFocusDown="@+id/chkAutoGear"/>
+
+    <CheckBox
+        android:id="@+id/chkShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtTeamNumber"
+        android:layout_alignStart="@+id/chooseName"
+        android:nextFocusDown="@+id/chkAutoGear"
+        android:nextFocusForward="@+id/chkAutoGear"
+        android:nextFocusLeft="@+id/txtTeamNumber"
+        android:nextFocusRight="@+id/radTeleopStrategyGear"
+        android:nextFocusUp="@+id/chooseName"
+        android:text="Were they absent?" />
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="wrap_content"
+        android:background="@android:color/black"
+        android:id="@+id/view3"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/txtTeamNumber"
+        android:layout_marginTop="37dp"
+        android:layout_alignEnd="@+id/view"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view3"
+        android:layout_alignParentStart="true"
+        android:id="@+id/lblAuto"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp"
+        android:layout_marginTop="16dp" />
+
+    <CheckBox
+        android:id="@+id/chkAutoGearSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/chkAutoGear"
+        android:layout_below="@+id/chkAutoGear"
+        android:nextFocusDown="@+id/radAutoGearLeftSide"
+        android:nextFocusForward="@+id/radAutoGearLeftSide"
+        android:nextFocusRight="@+id/chkAutoLowGoal"
+        android:nextFocusUp="@+id/chkAutoGear"
+        android:text="Placed the gear successfully?" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblAutoGearLocation"
+        android:layout_below="@+id/chkAutoGearSuccess"
+        android:layout_alignStart="@+id/chkAutoGearSuccess"
+        android:text="Where did they place the gear?"
+        android:textColor="@android:color/black" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grpAutoGearLocation"
+        android:layout_below="@+id/lblAutoGearLocation"
+        android:layout_alignStart="@+id/lblAutoGearLocation"
+        android:layout_marginStart="25dp">
+
+        <RadioButton
+            android:id="@+id/radAutoGearLeftSide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radAutoGearMiddle"
+            android:nextFocusForward="@+id/radAutoGearMiddle"
+            android:nextFocusRight="@+id/radTeleopShootingNumber1"
+            android:nextFocusUp="@+id/chkAutoGearSuccess"
+            android:text="Left Side" />
+
+        <RadioButton
+            android:id="@+id/radAutoGearMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radAutoGearRightSide"
+            android:nextFocusForward="@+id/radAutoGearRightSide"
+            android:nextFocusRight="@+id/radTeleopShootingNumber2"
+            android:nextFocusUp="@+id/radAutoGearLeftSide"
+            android:text="Middle " />
+
+        <RadioButton
+            android:id="@+id/radAutoGearRightSide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radAutoGearNA"
+            android:nextFocusForward="@+id/radAutoGearNA"
+            android:nextFocusRight="@+id/radTeleopShootingNumber2"
+            android:nextFocusUp="@+id/radAutoGearMiddle"
+            android:text="Right Side" />
+
+        <RadioButton
+            android:id="@+id/radAutoGearNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/chkAutoHighGoal"
+            android:nextFocusForward="@+id/chkAutoHighGoal"
+            android:nextFocusRight="@+id/chkTeleopRotorHandleGear"
+            android:nextFocusUp="@+id/radAutoGearRightSide"
+            android:text="N/A" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/chkAutoHighGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblAutoGearLocation"
+        android:layout_below="@+id/lblAutoShooter"
+        android:nextFocusDown="@+id/chkAutoLowGoal"
+        android:nextFocusForward="@+id/chkAutoLowGoal"
+        android:nextFocusRight="@+id/txtTeleopGearAttempt"
+        android:nextFocusUp="@+id/radAutoGearNA"
+        android:text="High Goal?" />
+
+    <TextView
+        android:text="Moving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAutoShooterSub"
+        android:layout_alignStart="@+id/lblAutoShooter"
+        android:id="@+id/lblAutoMoving"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/chkAutoMovingBaseline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblAutoShootHowMany"
+        android:layout_below="@+id/lblAutoMoving"
+        android:nextFocusForward="@+id/radTeleopStrategyGear"
+        android:nextFocusRight="@+id/chkTeleopClimbingSucc"
+        android:text="Did it cross the baseline?" />
+
+    <TextView
+        android:id="@+id/lblAutoShooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblAutoRotor"
+        android:layout_below="@+id/grpAutoGearLocation"
+        android:text="Shooter"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp" />
+
+    <TextView
+        android:text="How many did they make?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblAutoShootHowMany"
+        android:layout_below="@+id/chkAutoLowGoal"
+        android:layout_alignStart="@+id/chkAutoHighGoal"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/chkAutoLowGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/chkAutoHighGoal"
+        android:layout_below="@+id/chkAutoHighGoal"
+        android:nextFocusDown="@+id/txtAutoShooterMakes"
+        android:nextFocusForward="@+id/txtAutoShooterMakes"
+        android:nextFocusRight="@+id/txtTeleopGearAttempt"
+        android:nextFocusUp="@+id/chkAutoHighGoal"
+        android:text="Low Goal?" />
+
+    <Button
+        android:id="@+id/btnAutoShooterSub"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/lblAutoShooter"
+        android:layout_below="@+id/lblAutoShootHowMany"
+        android:nextFocusDown="@+id/chkAutoMovingBaseline"
+        android:nextFocusForward="@+id/chkAutoMovingBaseline"
+        android:nextFocusRight="@+id/txtAutoShooterMakes"
+        android:nextFocusUp="@+id/chkAutoLowGoal"
+        android:text="-" />
+
+    <EditText
+        android:id="@+id/txtAutoShooterMakes"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAutoShooterSub"
+        android:layout_toEndOf="@+id/btnAutoShooterSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2"
+        android:nextFocusDown="@+id/chkAutoMovingBaseline"
+        android:nextFocusForward="@+id/chkAutoMovingBaseline"
+        android:nextFocusRight="@+id/txtTeleopGearMake"
+        android:nextFocusUp="@+id/chkAutoLowGoal"/>
+
+    <Button
+        android:text="+"
+        android:id="@+id/btnAutoShooterAdd"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_below="@+id/lblAutoShootHowMany"
+        android:layout_toEndOf="@+id/txtAutoShooterMakes"
+        android:nextFocusDown="@+id/chkAutoMovingBaseline"
+        android:nextFocusForward="@+id/chkAutoMovingBaseline"
+        android:nextFocusRight="@+id/chkTeleopClimbingAttempt"
+        android:nextFocusUp="@+id/chkAutoLowGoal"/>
+
+    <TextView
+        android:id="@+id/lblTeleop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lblScouterName"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/view"
+        android:text="Teleop"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp" />
+
+    <TextView
+        android:text="Rotor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblAutoRotor"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp"
+        android:layout_below="@+id/lblAuto"
+        android:layout_alignStart="@+id/lblAuto"
+        android:layout_marginStart="25dp" />
+
+    <TextView
+        android:text="Strategy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopStrategy"
+        android:layout_below="@+id/lblTeleop"
+        android:layout_alignStart="@+id/lblTeleop"
+        android:layout_marginStart="25dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp" />
+
+    <TextView
+        android:text="What does the robot do the best?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopStrategyWhere"
+        android:layout_below="@+id/lblTeleopStrategy"
+        android:layout_alignStart="@+id/lblTeleopStrategy"
+        android:layout_marginStart="25dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/chkAutoGear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblAutoRotor"
+        android:layout_below="@+id/lblAutoRotor"
+        android:layout_marginStart="25dp"
+        android:nextFocusDown="@+id/chkAutoGearSuccess"
+        android:nextFocusForward="@+id/chkAutoGearSuccess"
+        android:nextFocusRight="@+id/chkTeleopShootingHigh"
+        android:nextFocusUp="@+id/chkShow"
+        android:text="Can the robot handle a gear?" />
+
+    <ImageView
+        android:src="@drawable/strongholdfield"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:id="@+id/imageView4"
+        android:layout_toEndOf="@+id/lblTeleopStrategyWhere"
+        android:layout_above="@+id/lblAutoRotor"
+        android:layout_alignRight="@+id/view2"
+        android:layout_marginRight="1dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopStrategyWhere"
+        android:layout_toEndOf="@+id/lblTeleop"
+        android:id="@+id/grpTeleopStrategyOptions">
+
+        <RadioButton
+            android:id="@+id/radTeleopStrategyGear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopStrategyShoot"
+            android:nextFocusForward="@+id/radTeleopStrategyShoot"
+            android:nextFocusLeft="@+id/chkShow"
+            android:nextFocusRight="@+id/chkEvalBreak"
+            android:text="Gear" />
+
+        <RadioButton
+            android:id="@+id/radTeleopStrategyShoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Shooting"
+            android:nextFocusDown="@+id/radTeleopStrategyDefense"
+            android:nextFocusForward="@+id/radTeleopStrategyDefense"
+            android:nextFocusLeft="@+id/chkShow"
+            android:nextFocusRight="@+id/chkEvalFoul"
+            android:nextFocusUp="@+id/radTeleopStrategyGear"/>
+
+        <RadioButton
+            android:text="Defense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopStrategyDefense"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/chkTeleopShootingHigh"
+            android:nextFocusForward="@+id/chkTeleopShootingHigh"
+            android:nextFocusLeft="@+id/chkShow"
+            android:nextFocusRight="@+id/chkEvalFoul"
+            android:nextFocusUp="@+id/radTeleopStrategyShoot"/>
+    </RadioGroup>
+
+    <CheckBox
+        android:text="High Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopShootingWhere"
+        android:layout_alignStart="@+id/grpTeleopStrategyOptions"
+        android:id="@+id/chkTeleopShootingHigh"
+        android:nextFocusDown="@+id/chkTeleopShootingLow"
+        android:nextFocusForward="@+id/chkTeleopShootingLow"
+        android:nextFocusLeft="@+id/chkAutoGear"
+        android:nextFocusRight="@+id/radTeleopShootingRateSlow"
+        android:nextFocusUp="@+id/radTeleopStrategyDefense"/>
+
+    <CheckBox
+        android:text="Low Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkTeleopShootingHigh"
+        android:layout_alignStart="@+id/chkTeleopShootingHigh"
+        android:id="@+id/chkTeleopShootingLow"
+        android:nextFocusDown="@+id/radTeleopShootingNumber1"
+        android:nextFocusForward="@+id/radTeleopShootingRateSlow"
+        android:nextFocusLeft="@+id/chkAutoGearSuccess"
+        android:nextFocusRight="@+id/radTeleopShootingRateSlow"
+        android:nextFocusUp="@+id/chkTeleopShootingHigh"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grpTeleopShootingOptions1"
+        android:layout_below="@+id/lblAutoGearLocation"
+        android:layout_alignStart="@+id/chkTeleopShootingLow">
+
+        <RadioButton
+            android:text="0-30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingNumber1"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopShootingNumber2"
+            android:nextFocusForward="@+id/radTeleopShootingNumber2"
+            android:nextFocusLeft="@+id/radAutoGearLeftSide"
+            android:nextFocusRight="@+id/radTeleopShootingNumber3"
+            android:nextFocusUp="@+id/chkTeleopShootingLow"/>
+
+        <RadioButton
+            android:text="31-60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingNumber2"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/chkTeleopRotorHandleGear"
+            android:nextFocusForward="@+id/radTeleopShootingNumber3"
+            android:nextFocusLeft="@+id/radAutoGearMiddle"
+            android:nextFocusRight="@+id/radTeleopShootingNumber4"
+            android:nextFocusUp="@+id/radTeleopShootingNumber1"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lblTeleopShootingRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/lblTeleopShootingWhere"
+        android:layout_marginLeft="50dp"
+        android:layout_toEndOf="@+id/lblTeleopShootingNumber"
+        android:text="Estimate how fast they fire"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:text="Can they shoot in the ..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopShootingWhere"
+        android:layout_below="@+id/lblTeleopShooting"
+        android:layout_alignStart="@+id/lblTeleopStrategyWhere"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopShootingRate"
+        android:layout_alignStart="@+id/lblTeleopShootingRate"
+        android:layout_marginStart="29dp"
+        android:id="@+id/grpTeleopShootingRate"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:text="Slow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingRateSlow"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopShootingAcc1"
+            android:nextFocusForward="@+id/radTeleopShootingRateMed"
+            android:nextFocusLeft="@+id/chkTeleopShootingHigh"
+            android:nextFocusRight="@+id/radTeleopShootingRateMed" />
+
+        <RadioButton
+            android:text="Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingRateMed"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopShootingAcc3"
+            android:nextFocusForward="@+id/radTeleopShootingRateFast"
+            android:nextFocusLeft="@+id/radTeleopShootingRateSlow"
+            android:nextFocusRight="@+id/radTeleopShootingRateFast"/>
+
+        <RadioButton
+            android:text="Fast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingRateFast"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopShootingAcc3"
+            android:nextFocusForward="@+id/radTeleopShootingRateNA"
+            android:nextFocusLeft="@+id/radTeleopShootingRateMed"
+            android:nextFocusRight="@+id/radTeleopShootingRateNA"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopShootingRateNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="N/A"
+            android:nextFocusDown="@+id/radTeleopShootingAcc3"
+            android:nextFocusForward="@+id/radTeleopShootingNumber1"
+            android:nextFocusLeft="@+id/radTeleopShootingRateFast"
+            android:nextFocusRight="@+id/radEvalDriverRate1"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lblTeleopShooting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblTeleopStrategy"
+        android:layout_below="@+id/grpTeleopStrategyOptions"
+        android:layout_marginTop="20dp"
+        android:text="Shooting"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopShootingAcc"
+        android:layout_alignStart="@+id/grpTeleopShootingRate"
+        android:id="@+id/grpTeleopShootingAccuracy1" >
+
+        <RadioButton
+            android:text="0-25%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingAcc1"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopShootingAcc2"
+            android:nextFocusForward="@+id/radTeleopShootingAcc2"
+            android:nextFocusLeft="@+id/radTeleopShootingNumber2"
+            android:nextFocusRight="@+id/radTeleopShootingAcc3"
+            android:nextFocusUp="@+id/radTeleopShootingRateSlow"/>
+
+        <RadioButton
+            android:text="26-50%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingAcc2"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopRotorPilotGood"
+            android:nextFocusForward="@+id/radTeleopShootingAcc3"
+            android:nextFocusLeft="@+id/radTeleopShootingNumber4"
+            android:nextFocusRight="@+id/radTeleopShootingAcc4"
+            android:nextFocusUp="@+id/radTeleopShootingAcc1"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopShootingAcc"
+        android:layout_toEndOf="@+id/grpTeleopShootingAccuracy1"
+        android:id="@+id/grpTeleopShootingAccuracy2"
+        android:layout_marginStart="20dp">
+
+        <RadioButton
+            android:text="51-75%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/radTeleopShootingAcc3"
+            android:nextFocusDown="@+id/radTeleopShootingAcc4"
+            android:nextFocusForward="@+id/radTeleopShootingAcc4"
+            android:nextFocusLeft="@+id/radTeleopShootingAcc1"
+            android:nextFocusRight="@+id/radEvalDriverRate3"
+            android:nextFocusUp="@+id/radTeleopShootingRateMed"/>
+
+        <RadioButton
+            android:text="76-100%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingAcc4"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopRotorPilotNA"
+            android:nextFocusForward="@+id/chkTeleopRotorHandleGear"
+            android:nextFocusLeft="@+id/radTeleopShootingAcc2"
+            android:nextFocusRight="@+id/radEvalDriverRate2"
+            android:nextFocusUp="@+id/radTeleopShootingAcc3"/>
+    </RadioGroup>
+
+    <TextView
+        android:text="Estimate the accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopShootingAcc"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:layout_alignBaseline="@+id/lblTeleopShootingNumber"
+        android:layout_alignBottom="@+id/lblTeleopShootingNumber"
+        android:layout_alignStart="@+id/lblTeleopShootingRate"
+        android:textColor="@android:color/black" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grpTeleopShootingOptions2"
+        android:layout_below="@+id/lblTeleopShootingNumber"
+        android:layout_toEndOf="@+id/grpTeleopShootingOptions1"
+        android:layout_marginStart="20dp">
+
+        <RadioButton
+            android:text="61-90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/radTeleopShootingNumber3"
+            android:nextFocusDown="@+id/radTeleopShootingNumber4"
+            android:nextFocusForward="@+id/radTeleopShootingNumber4"
+            android:nextFocusLeft="@+id/radTeleopShootingNumber1"
+            android:nextFocusRight="@+id/radTeleopShootingAcc1"
+            android:nextFocusUp="@+id/chkTeleopShootingLow"/>
+
+        <RadioButton
+            android:text="91+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopShootingNumber4"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/chkTeleopRotorHandleGear"
+            android:nextFocusForward="@+id/radTeleopShootingAcc1"
+            android:nextFocusLeft="@+id/radTeleopShootingNumber2"
+            android:nextFocusRight="@+id/radTeleopShootingAcc2"
+            android:nextFocusUp="@+id/radTeleopShootingNumber3"/>
+    </RadioGroup>
+
+    <TextView
+        android:text="Rotor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblTeleopShooting"
+        android:id="@+id/lblTeleopRotor"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp"
+        android:layout_below="@+id/grpTeleopShootingOptions1" />
+
+    <TextView
+        android:text="How did their Pilot perform?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopRotorPilot"
+        android:layout_alignTop="@+id/chkTeleopRotorHandleGear"
+        android:layout_alignStart="@+id/lblTeleopShootingAcc"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopRotorPilot"
+        android:layout_alignStart="@+id/grpTeleopShootingAccuracy1"
+        android:orientation="horizontal"
+        android:id="@+id/grpTeleopRotorPilot">
+
+        <RadioButton
+            android:text="Good"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopRotorPilotGood"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopRotorNumber0"
+            android:nextFocusForward="@+id/radTeleopRotorPilotBad"
+            android:nextFocusLeft="@+id/chkTeleopRotorHandleGear"
+            android:nextFocusRight="@+id/radTeleopRotorPilotBad"
+            android:nextFocusUp="@+id/radTeleopShootingAcc2"/>
+
+        <RadioButton
+            android:text="Bad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopRotorPilotBad"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopRotorNumber2"
+            android:nextFocusForward="@+id/radTeleopRotorPilotNA"
+            android:nextFocusLeft="@+id/radTeleopRotorPilotGood"
+            android:nextFocusRight="@+id/radTeleopRotorPilotNA"
+            android:nextFocusUp="@+id/radTeleopShootingAcc2"/>
+
+        <RadioButton
+            android:text="N/A"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radTeleopRotorPilotNA"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radTeleopRotorNumber2"
+            android:nextFocusForward="@+id/txtTeleopGearAttempt"
+            android:nextFocusLeft="@+id/radTeleopRotorPilotBad"
+            android:nextFocusRight="@+id/txtCommentsBox"
+            android:nextFocusUp="@+id/radTeleopShootingAcc4"/>
+    </RadioGroup>
+
+    <TextView
+        android:text="How many gears did they..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopRotorGear"
+        android:layout_below="@+id/grpTeleopRotorPilot"
+        android:layout_alignStart="@+id/lblTeleopShootingNumber"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/txtTeleopGearAttempt"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTeleopGearAttemptSub"
+        android:layout_toEndOf="@+id/btnTeleopGearAttemptSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2"
+        android:nextFocusDown="@+id/txtTeleopGearMake"
+        android:nextFocusForward="@+id/txtTeleopGearMake"
+        android:nextFocusLeft="@+id/chkAutoHighGoal"
+        android:nextFocusRight="@+id/radTeleopRotorNumber0"
+        android:nextFocusUp="@+id/chkTeleopRotorHandleGear"/>
+
+    <Button
+        android:text="+"
+        android:id="@+id/btnTeleopGearAttemptAdd"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_below="@+id/lblTeleopRotorGear"
+        android:layout_toEndOf="@+id/txtTeleopGearAttempt"
+        android:nextFocusDown="@+id/txtTeleopGearMake"
+        android:nextFocusForward="@+id/txtTeleopGearMake"
+        android:nextFocusLeft="@+id/txtTeleopGearAttempt"
+        android:nextFocusRight="@+id/radTeleopRotorNumber0"
+        android:nextFocusUp="@+id/chkTeleopRotorHandleGear"/>
+
+    <TextView
+        android:text="Attempt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtTeleopGearAttempt"
+        android:id="@+id/lblTeleopRotorAttempt"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/btnTeleopGearAttemptAdd"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/txtTeleopGearMake"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTeleopGearMakeSub"
+        android:layout_toEndOf="@+id/btnTeleopGearAttemptSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2"
+        android:nextFocusDown="@+id/chkTeleopClimbingAttempt"
+        android:nextFocusForward="@+id/radTeleopRotorNumber0"
+        android:nextFocusLeft="@+id/chkAutoLowGoal"
+        android:nextFocusRight="@+id/radTeleopRotorNumber0"/>
+
+    <Button
+        android:text="+"
+        android:id="@+id/btnTeleopGearMakeAdd"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_below="@+id/btnTeleopGearAttemptAdd"
+        android:layout_toEndOf="@+id/txtTeleopGearAttempt"
+        android:nextFocusDown="@+id/chkTeleopClimbingAttempt"
+        android:nextFocusForward="@+id/radTeleopRotorNumber0"
+        android:nextFocusLeft="@+id/txtTeleopGearMake"
+        android:nextFocusRight="@+id/radTeleopRotorNumber0"/>
+
+    <TextView
+        android:text="Make"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtTeleopGearMake"
+        android:id="@+id/lblTeleopRotorMake"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/btnTeleopGearMakeAdd"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/lblTeleopRotorsSpinning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblTeleopRotorPilot"
+        android:layout_below="@+id/grpTeleopRotorPilot"
+        android:text="How many rotors did the alliance spin?"
+        android:textColor="@android:color/black" />
+
+    <RadioGroup
+        android:id="@+id/grpTeleopRotorOptions1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/grpTeleopRotorPilot"
+        android:layout_below="@+id/lblTeleopRotorsSpinning"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radTeleopRotorNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:nextFocusDown="@+id/radTeleopRotorNumber3"
+            android:nextFocusForward="@+id/radTeleopRotorNumber1"
+            android:nextFocusLeft="@+id/txtTeleopGearAttempt"
+            android:nextFocusRight="@+id/radTeleopRotorNumber1"
+            android:nextFocusUp="@+id/radTeleopRotorPilotGood"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopRotorNumber1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:nextFocusDown="@+id/radTeleopRotorNumber4"
+            android:nextFocusForward="@+id/radTeleopRotorNumber2"
+            android:nextFocusLeft="@+id/radTeleopRotorNumber0"
+            android:nextFocusRight="@+id/radTeleopRotorNumber2"
+            android:nextFocusUp="@+id/radTeleopRotorPilotGood"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopRotorNumber2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2"
+            android:nextFocusDown="@+id/radTeleopRotorNumber4"
+            android:nextFocusForward="@+id/radTeleopRotorNumber3"
+            android:nextFocusLeft="@+id/radTeleopRotorNumber1"
+            android:nextFocusRight="@+id/txtCommentsBox"
+            android:nextFocusUp="@+id/radTeleopRotorPilotBad"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/grpTeleopRotorOptions2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/grpTeleopRotorOptions1"
+        android:layout_below="@+id/grpTeleopRotorOptions1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radTeleopRotorNumber3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3"
+            android:nextFocusDown="@+id/radTeleopClimbingSlow"
+            android:nextFocusForward="@+id/radTeleopRotorNumber4"
+            android:nextFocusLeft="@+id/txtTeleopGearMake"
+            android:nextFocusRight="@+id/radTeleopRotorNumber4"
+            android:nextFocusUp="@+id/radTeleopRotorNumber0"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopRotorNumber4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="4"
+            android:nextFocusDown="@+id/radTeleopClimbingSlow"
+            android:nextFocusForward="@+id/chkTeleopClimbingAttempt"
+            android:nextFocusLeft="@+id/radTeleopRotorNumber3"
+            android:nextFocusRight="@+id/txtCommentsBox"
+            android:nextFocusUp="@+id/radTeleopRotorNumber1"/>
+    </RadioGroup>
+
+    <TextView
+        android:text="Climbing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTeleopGearMakeSub"
+        android:layout_alignStart="@+id/lblTeleopRotor"
+        android:id="@+id/lblTeleopClimbing"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18dp" />
+
+    <TextView
+        android:text="Estimate how many shots they made?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopShootingNumber"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/chkTeleopShootingLow"
+        android:layout_alignStart="@+id/lblTeleopShootingWhere" />
+
+    <CheckBox
+        android:text="Were they successful?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkTeleopClimbingAttempt"
+        android:layout_alignStart="@+id/chkTeleopClimbingAttempt"
+        android:id="@+id/chkTeleopClimbingSucc"
+        android:nextFocusDown="@+id/chkTeleopClimbingPower"
+        android:nextFocusForward="@+id/chkTeleopClimbingPower"
+        android:nextFocusLeft="@+id/chkAutoMovingBaseline"
+        android:nextFocusRight="@+id/radTeleopClimbingSlow"
+        android:nextFocusUp="@+id/chkTeleopClimbingAttempt"/>
+
+    <RadioGroup
+        android:id="@+id/grpTeleopClimbing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/grpTeleopRotorOptions1"
+        android:layout_below="@+id/lblTeleopClimbingSpeed"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radTeleopClimbingSlow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Slow"
+            android:nextFocusForward="@+id/radTeleopClimbingFast"
+            android:nextFocusLeft="@+id/chkTeleopClimbingAttempt"
+            android:nextFocusRight="@+id/radTeleopClimbingFast"
+            android:nextFocusUp="@+id/radTeleopRotorNumber3"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopClimbingFast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fast"
+            android:nextFocusForward="@+id/radTeleopClimbingNA"
+            android:nextFocusLeft="@+id/radTeleopClimbingSlow"
+            android:nextFocusRight="@+id/radTeleopClimbingNA"
+            android:nextFocusUp="@+id/radTeleopRotorNumber4"/>
+
+        <RadioButton
+            android:id="@+id/radTeleopClimbingNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="N/A"
+            android:nextFocusForward="@+id/chkEvalBreak"
+            android:nextFocusLeft="@+id/radTeleopClimbingFast"
+            android:nextFocusRight="@+id/txtCommentsBox"
+            android:nextFocusUp="@+id/radTeleopRotorNumber4"/>
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/chkTeleopClimbingPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/chkTeleopClimbingSucc"
+        android:layout_below="@+id/chkTeleopClimbingSucc"
+        android:text="Did they stay put when power went out?"
+        android:nextFocusForward="@+id/radTeleopClimbingSlow"
+        android:nextFocusLeft="@+id/chkAutoMovingBaseline"
+        android:nextFocusRight="@+id/radTeleopClimbingSlow"
+        android:nextFocusUp="@+id/chkTeleopClimbingSucc"/>
+
+    <TextView
+        android:id="@+id/lblEval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lblTeleopStrategy"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/imageView4"
+        android:text="Overall Evaluation"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <CheckBox
+        android:text="Did they break down?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEval"
+        android:layout_alignStart="@+id/lblEval"
+        android:layout_marginStart="30dp"
+        android:id="@+id/chkEvalBreak"
+        android:nextFocusDown="@+id/txtEvalScoreAlly"
+        android:nextFocusForward="@+id/txtEvalScoreAlly"
+        android:nextFocusLeft="@+id/radTeleopStrategyGear"/>
+
+    <TextView
+        android:text="Overall Score?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkEvalBreak"
+        android:layout_alignStart="@+id/chkEvalBreak"
+        android:id="@+id/lblEvalScore"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/txtEvalScoreAlly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEvalScore"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/lblEvalScoreAlly"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3"
+        android:nextFocusDown="@+id/chkEvalFoul"
+        android:nextFocusForward="@+id/chkEvalFoul"
+        android:nextFocusLeft="@+id/radTeleopStrategyGear"
+        android:nextFocusUp="@+id/chkEvalBreak"/>
+
+    <CheckBox
+        android:text="Can they handle gears?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopRotorHandleGear"
+        android:layout_below="@+id/lblTeleopRotor"
+        android:layout_alignStart="@+id/lblTeleopRotorGear"
+        android:nextFocusDown="@+id/txtTeleopGearAttempt"
+        android:nextFocusForward="@+id/radTeleopRotorPilotGood"
+        android:nextFocusLeft="@+id/radAutoGearNA"
+        android:nextFocusRight="@+id/radTeleopRotorPilotGood"
+        android:nextFocusUp="@+id/radTeleopShootingNumber2"/>
+
+    <Button
+        android:id="@+id/btnTeleopGearMakeSub"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/btnTeleopGearAttemptSub"
+        android:layout_below="@+id/btnTeleopGearAttemptSub"
+        android:text="-"
+        android:nextFocusDown="@+id/chkTeleopClimbingAttempt"
+        android:nextFocusForward="@+id/radTeleopRotorNumber0"
+        android:nextFocusLeft="@+id/chkAutoLowGoal"
+        android:nextFocusRight="@+id/txtTeleopGearMake"/>
+
+    <Button
+        android:id="@+id/btnTeleopGearAttemptSub"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/lblTeleopShooting"
+        android:layout_below="@+id/lblTeleopRotorGear"
+        android:text="-"
+        android:nextFocusDown="@+id/txtTeleopGearMake"
+        android:nextFocusForward="@+id/txtTeleopGearMake"
+        android:nextFocusLeft="@+id/chkAutoHighGoal"
+        android:nextFocusRight="@+id/txtTeleopGearAttempt"
+        android:nextFocusUp="@+id/chkTeleopRotorHandleGear"/>
+
+    <TextView
+        android:text="Ally Team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblEvalScoreAlly"
+        android:textColor="#000000"
+        android:layout_alignTop="@+id/chkShow"
+        android:layout_alignEnd="@+id/lblEvalScore" />
+
+    <CheckBox
+        android:text="Did the team get foul points?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtEvalScoreAlly"
+        android:layout_alignStart="@+id/lblEvalScore"
+        android:id="@+id/chkEvalFoul"
+        android:nextFocusDown="@+id/chkEvalCardYellow"
+        android:nextFocusForward="@+id/chkEvalCardYellow"
+        android:nextFocusLeft="@+id/radTeleopStrategyShoot"
+        android:nextFocusUp="@+id/txtEvalScoreAlly"/>
+
+    <TextView
+        android:text="Did the individual robot get..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkEvalFoul"
+        android:layout_alignStart="@+id/chkEvalFoul"
+        android:id="@+id/lblEvalCard"
+        android:textColor="#000000" />
+
+    <CheckBox
+        android:text="a yellow card?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEvalCard"
+        android:layout_alignStart="@+id/lblEvalScoreAlly"
+        android:id="@+id/chkEvalCardYellow"
+        android:nextFocusDown="@+id/chkEvalCardRed"
+        android:nextFocusForward="@+id/chkEvalCardRed"
+        android:nextFocusLeft="@+id/radTeleopStrategyDefense"
+        android:nextFocusUp="@+id/chkEvalFoul"/>
+
+    <CheckBox
+        android:text="a red card?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkEvalCardRed"
+        android:layout_below="@+id/chkEvalCardYellow"
+        android:layout_alignStart="@+id/chkEvalCardYellow"
+        android:nextFocusDown="@+id/radEvalDriverRate5"
+        android:nextFocusForward="@+id/radEvalDriverRate5"
+        android:nextFocusLeft="@+id/radTeleopStrategyDefense"
+        android:nextFocusUp="@+id/chkEvalCardYellow"/>
+
+    <TextView
+        android:text="Rate the driver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkEvalCardRed"
+        android:layout_alignStart="@+id/lblEvalCard"
+        android:id="@+id/lblEvalDriver"
+        android:textColor="#000000" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEvalDriver"
+        android:layout_alignStart="@+id/chkEvalCardRed"
+        android:id="@+id/grpEvalDriverRate">
+
+        <RadioButton
+            android:text="5 stars (great)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalDriverRate5"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radEvalDriverRate4"
+            android:nextFocusForward="@+id/radEvalDriverRate4"
+            android:nextFocusLeft="@+id/radTeleopShootingRateNA"
+            android:nextFocusUp="@+id/chkEvalCardRed"/>
+
+        <RadioButton
+            android:text="4 stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalDriverRate4"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radEvalDriverRate3"
+            android:nextFocusForward="@+id/radEvalDriverRate3"
+            android:nextFocusLeft="@+id/radTeleopShootingRateNA"
+            android:nextFocusUp="@+id/radEvalDriverRate5"/>
+
+        <RadioButton
+            android:text="3 stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalDriverRate3"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radEvalDriverRate2"
+            android:nextFocusForward="@+id/radEvalDriverRate2"
+            android:nextFocusLeft="@+id/radTeleopShootingAcc3"
+            android:nextFocusUp="@+id/radEvalDriverRate4"/>
+
+        <RadioButton
+            android:text="2 stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalDriverRate2"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/radEvalDriverRate1"
+            android:nextFocusForward="@+id/radEvalDriverRate1"
+            android:nextFocusLeft="@+id/radEvalDriverRate3"
+            android:nextFocusUp="@+id/radTeleopRotorNumber3"/>
+
+        <RadioButton
+            android:text="1 star (bad)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalDriverRate1"
+            android:layout_weight="1"
+            android:nextFocusDown="@+id/txtCommentsBox"
+            android:nextFocusForward="@+id/txtCommentsBox"
+            android:nextFocusLeft="@+id/radTeleopShootingAcc4"
+            android:nextFocusUp="@+id/radEvalDriverRate2"/>
+    </RadioGroup>
+
+    <TextView
+        android:text="Comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpEvalDriverRate"
+        android:layout_alignStart="@+id/lblEval"
+        android:id="@+id/lblComments"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <EditText
+        android:id="@+id/txtCommentsBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/lblTeleopClimbing"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/lblEvalDriver"
+        android:layout_below="@+id/lblComments"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:nextFocusDown="@+id/btnFormsPendingSave"
+        android:nextFocusForward="@+id/btnFormsPendingSave"
+        android:nextFocusLeft="@+id/radTeleopRotorPilotNA"
+        android:nextFocusUp="@+id/radEvalDriverRate1"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopClimbingAttempt"
+        android:text="Did they attempt to climb?"
+        android:layout_below="@+id/lblTeleopClimbing"
+        android:layout_alignStart="@+id/lblTeleopRotorGear"
+        android:nextFocusDown="@+id/chkTeleopClimbingSucc"
+        android:nextFocusForward="@+id/chkTeleopClimbingSucc"
+        android:nextFocusLeft="@+id/txtAutoShooterMakes"
+        android:nextFocusRight="@+id/radTeleopClimbingSlow"
+        android:nextFocusUp="@+id/txtTeleopGearMake"/>
+
+    <TextView
+        android:id="@+id/lblFormsPending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblComments"
+        android:layout_below="@+id/txtCommentsBox"
+        android:text="0 Forms Pending"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <Button
+        android:text="Save Form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblFormsPending"
+        android:layout_alignStart="@+id/txtCommentsBox"
+        android:id="@+id/btnFormsPendingSave"
+        android:nextFocusUp="@+id/txtCommentsBox"
+        android:nextFocusForward="@+id/txtMatchNumber"
+        android:nextFocusLeft="@+id/radTeleopClimbingNA"/>
+
+    <TextView
+        android:id="@+id/lblTeleopClimbingSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblTeleopRotorsSpinning"
+        android:layout_below="@+id/btnTeleopGearMakeAdd"
+        android:layout_marginTop="20dp"
+        android:text="Estimate how fast they climbed"
+        android:textColor="#000000" />
+
+    <Button
+        android:text="Transfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFormsPendingTransfer"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/btnFormsPendingSave"
+        android:layout_alignBottom="@+id/btnFormsPendingSave"
+        android:nextFocusForward="@+id/txtMatchNumber"
+        android:nextFocusLeft="@+id/btnFormsPendingSave"
+        android:nextFocusUp="@+id/txtCommentsBox"/>
+
+</RelativeLayout>

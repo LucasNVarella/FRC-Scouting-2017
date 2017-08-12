@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.lucas.prescouting20.MainActivity"
+    android:background="#7ec0ee">
+
+    <TextView
+        android:id="@+id/lblEval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lblTeleopDrivetrain"
+        android:layout_alignStart="@+id/view2"
+        android:layout_marginStart="16dp"
+        android:text="Overall Evaluation"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:id="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="377.953dp"
+        android:layout_marginLeft="5dp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:id="@+id/view2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="377.953dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:text="Basics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblBasics"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp"
+        android:paddingLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Scouter Name #1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblName1"
+        android:layout_below="@+id/lblBasics"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblName1"
+        android:layout_alignParentStart="true"
+        android:id="@+id/chooseName1"
+        android:background="#ffffff"
+        android:layout_width="165dp" />
+
+    <TextView
+        android:text="Scouter Name #2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:id="@+id/lblName2"
+        android:layout_toEndOf="@+id/chooseName1"
+        android:layout_alignBaseline="@+id/lblName1"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblName2"
+        android:layout_alignStart="@id/lblName2"
+        android:id="@+id/chooseName2"
+        android:background="#ffffff"
+        android:layout_width="165dp" />
+
+    <TextView
+        android:text="Scouter Name #3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblName3"
+        android:layout_below="@+id/chooseName1"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="5dp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblName3"
+        android:layout_alignParentStart="true"
+        android:id="@+id/chooseName3"
+        android:background="#ffffff"
+        android:layout_width="165dp" />
+
+    <TextView
+        android:text="Scouter Name #4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:id="@+id/lblName4"
+        android:layout_toEndOf="@+id/chooseName3"
+        android:layout_alignBaseline="@+id/lblName3"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblName4"
+        android:layout_alignStart="@id/lblName4"
+        android:id="@+id/chooseName4"
+        android:background="#ffffff"
+        android:layout_width="165dp" />
+
+    <TextView
+        android:text="Scouter Name #5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblName5"
+        android:layout_below="@+id/chooseName3"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="5dp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblName5"
+        android:layout_alignParentStart="true"
+        android:id="@+id/chooseName5"
+        android:background="#ffffff"
+        android:layout_width="165dp" />
+
+    <TextView
+        android:text="Team Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:id="@+id/lblTeamNumber"
+        android:layout_toEndOf="@+id/chooseName5"
+        android:layout_alignBaseline="@+id/lblName5"
+        android:textColor="@android:color/black" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txtTeamNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/chooseName5"
+        android:layout_alignEnd="@+id/lblTeamNumber"
+        android:layout_alignStart="@+id/lblTeamNumber"
+        android:layout_below="@+id/lblTeamNumber"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="4"
+        android:singleLine="true" />
+
+    <CheckBox
+        android:text="Is the Robot finished?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkRobotFinished"
+        android:layout_below="@+id/chooseName5"
+        android:layout_toEndOf="@+id/lblBasics"
+        android:layout_marginTop="5dp" />
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="wrap_content"
+        android:background="@android:color/black"
+        android:id="@+id/view3"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/chkRobotFinished"
+        android:layout_marginTop="16dp"
+        android:layout_alignEnd="@+id/view"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblAuto"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp"
+        android:layout_alignTop="@id/view3"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <CheckBox
+        android:text="Do they have Auto?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkAuto"
+        android:layout_below="@+id/lblAuto"
+        android:layout_alignStart="@+id/lblAuto"
+        android:layout_marginStart="25dp" />
+
+    <CheckBox
+        android:text="Do they place Gears in Auto?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkAuto"
+        android:layout_alignStart="@+id/chkAuto"
+        android:id="@+id/chkAutoGears" />
+
+    <TextView
+        android:text="In Auto, do they score..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkAutoGears"
+        android:layout_alignStart="@+id/chkAutoGears"
+        android:id="@+id/lblAutoShooting"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:text="High Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkAutoShootingHigh"
+        android:layout_below="@+id/lblAutoShooting"
+        android:layout_alignStart="@+id/lblAutoShooting"
+        android:layout_marginStart="25dp" />
+
+    <CheckBox
+        android:text="Low Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkAutoShootingLow"
+        android:layout_alignBaseline="@id/chkAutoShootingHigh"
+        android:layout_toEndOf="@+id/chkAutoShootingHigh"
+        android:layout_marginLeft="45dp" />
+
+    <TextView
+        android:text="Do their Auto routines start..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkAutoShootingHigh"
+        android:layout_alignStart="@+id/lblAutoShooting"
+        android:id="@+id/lblAutoStartingPosition"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:text="Next to Key?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkAutoStartingPositionKey"
+        android:layout_below="@+id/lblAutoStartingPosition"
+        android:layout_alignStart="@+id/lblAutoStartingPosition"
+        android:layout_marginStart="25dp" />
+
+    <CheckBox
+        android:text="At the Center?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkAutoStartingPositionCenter"
+        android:layout_below="@+id/chkAutoStartingPositionKey"
+        android:layout_alignStart="@+id/btnAutoShootTimeSub" />
+
+    <CheckBox
+        android:id="@+id/chkAutoStartingPositionLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="At Left Gear?"
+        android:layout_below="@+id/chkAutoStartingPositionRight"
+        android:layout_alignStart="@+id/chkAutoStartingPositionRight" />
+
+    <CheckBox
+        android:id="@+id/chkAutoStartingPositionRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="At Right Gear?"
+        android:layout_below="@+id/lblAutoStartingPosition"
+        android:layout_alignStart="@+id/chkAutoShootingLow" />
+
+    <TextView
+        android:id="@+id/lblAutoShootTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblAutoStartingPosition"
+        android:layout_below="@+id/chkAutoStartingPositionCenter"
+        android:text="How long does it take them to shoot?"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/txtAutoShootTime"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAutoShootTimeSub"
+        android:layout_alignBottom="@+id/btnAutoShootTimeSub"
+        android:layout_toEndOf="@+id/btnAutoShootTimeSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2" />
+
+    <Button
+        android:text="+"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnAutoShootTimeAdd"
+        android:layout_below="@+id/lblAutoShootTime"
+        android:layout_toEndOf="@+id/txtAutoShootTime" />
+
+    <TextView
+        android:text="Strategies:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAutoShootTimeSub"
+        android:layout_alignStart="@+id/lblAutoShootTime"
+        android:id="@+id/lblAutoStrategies"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/lblTeleop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/view"
+        android:text="Teleop"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/lblTeleopDrivetrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblTeleop"
+        android:layout_below="@+id/lblTeleop"
+        android:layout_marginStart="25dp"
+        android:text="What type of drive train do they have?"
+        android:textColor="#000000" />
+
+    <RadioGroup
+        android:id="@+id/grpTeleopDriveTrain1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/chkTeleopHandleGears"
+        android:layout_below="@+id/lblTeleopDrivetrain"
+        android:layout_marginStart="25dp">
+
+        <RadioButton
+            android:id="@+id/radTeleopDriveTrainPneumatic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pneumatic" />
+
+        <RadioButton
+            android:id="@+id/radTeleopDriveTrainMecanum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mecanum" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/txtAutoStrategies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/chooseName4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/lblAutoStrategies"
+        android:layout_below="@+id/lblAutoStrategies"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTeleopDrivetrain"
+        android:layout_toEndOf="@+id/grpTeleopDriveTrain1"
+        android:id="@+id/grpTeleopDriveTrain2">
+
+        <RadioButton
+            android:id="@+id/radTeleopDriveTrainSwerve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Swerve" />
+
+        <RadioButton
+            android:id="@+id/radTeleopDriveTrainTank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tank" />
+    </RadioGroup>
+
+    <CheckBox
+        android:text="Can it handle gears?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpTeleopDriveTrain1"
+        android:layout_alignStart="@+id/lblTeleopDrivetrain"
+        android:id="@+id/chkTeleopHandleGears" />
+
+    <CheckBox
+        android:text="Can it pick up gears off the ground?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopGearsGround"
+        android:layout_below="@+id/chkTeleopHandleGears"
+        android:layout_alignStart="@+id/chkTeleopHandleGears" />
+
+    <CheckBox
+        android:text="Can it pick up balls off the ground?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopBallsGround"
+        android:layout_below="@+id/chkTeleopGearsGround"
+        android:layout_alignStart="@+id/chkTeleopGearsGround" />
+
+    <TextView
+        android:id="@+id/lblTeleopHandleBalls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpTeleopDriveTrain2"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/chkTeleopGearsGround"
+        android:text="Can it handle balls?"
+        android:textColor="#000000" />
+
+    <CheckBox
+        android:text="High Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopHandleBallsHigh"
+        android:layout_alignBaseline="@+id/txtTeamNumber"
+        android:layout_alignBottom="@+id/txtTeamNumber"
+        android:layout_alignEnd="@+id/lblTeleopHandleBalls" />
+
+    <CheckBox
+        android:text="Low Goal?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopHandleBallsLow"
+        android:layout_below="@+id/chkTeleopHandleBallsHigh"
+        android:layout_alignStart="@+id/chkTeleopHandleBallsHigh" />
+
+    <TextView
+        android:text="How long does it take to shoot a full load? (seconds)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chkAutoGears"
+        android:layout_alignStart="@+id/lblTeleopNumberStore"
+        android:id="@+id/lblTeleopTimeShoot"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/txtTeleopStore"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chkAuto"
+        android:layout_toEndOf="@+id/btnTeleopStoreSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2" />
+
+    <Button
+        android:text="-"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnAutoShootTimeSub"
+        android:layout_below="@+id/lblAutoShootTime"
+        android:layout_toEndOf="@+id/lblAuto" />
+
+    <TextView
+        android:text="How many balls can they store?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopNumberStore"
+        android:textColor="#000000"
+        android:layout_alignTop="@+id/view3"
+        android:layout_alignStart="@+id/chkTeleopBallsGround" />
+
+    <Button
+        android:id="@+id/btnTeleopStoreAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/btnTeleopStoreSub"
+        android:layout_toEndOf="@+id/txtTeleopStore"
+        android:text="+" />
+
+    <Button
+        android:text="-"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnTeleopStoreSub"
+        android:layout_alignTop="@+id/lblAuto"
+        android:layout_alignStart="@+id/grpTeleopDriveTrain1" />
+
+    <Button
+        android:text="-"
+        android:layout_height="40dp"
+        android:layout_below="@+id/lblTeleopTimeShoot"
+        android:layout_alignStart="@+id/btnTeleopStoreSub"
+        android:id="@+id/btnTeleopShootFullTimeSub"
+        android:layout_width="40dp" />
+
+    <Button
+        android:text="+"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/lblTeleopTimeShoot"
+        android:layout_toEndOf="@+id/txtTeleopFullTime"
+        android:id="@+id/btnTeleopShootFullTimeAdd" />
+
+    <CheckBox
+        android:text="Can the robot climb?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTeleopClimb"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/lblTeleopTimeShoot" />
+
+    <TextView
+        android:text="How long does it take to climb?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTeleopClimbTime"
+        android:textColor="#000000"
+        android:layout_below="@+id/chkTeleopClimb"
+        android:layout_alignEnd="@+id/lblTeleopNumberStore" />
+
+    <EditText
+        android:id="@+id/txtTeleopClimbTime"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTeleopClimbTimeSub"
+        android:layout_alignBottom="@+id/btnTeleopClimbTimeSub"
+        android:layout_toEndOf="@+id/btnTeleopClimbTimeSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2" />
+
+    <TextView
+        android:id="@+id/lblFormsPending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lblEval"
+        android:layout_below="@+id/txtEvalComments"
+        android:layout_marginTop="16dp"
+        android:text="0 Form(s) Pending"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <CheckBox
+        android:text="Student only drive team?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:id="@+id/chkEvalStudent"
+        android:layout_alignBottom="@+id/chooseName2"
+        android:layout_alignStart="@+id/lblFormsPending" />
+
+    <Button
+        android:id="@+id/btnTeleopClimbTimeSub"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/btnTeleopShootFullTimeSub"
+        android:layout_below="@+id/lblTeleopClimbTime"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/btnTeleopClimbTimeAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/lblTeleopClimbTime"
+        android:layout_toEndOf="@+id/txtTeleopClimbTime"
+        android:text="+" />
+
+    <TextView
+        android:text="Code Language?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblEvalLang"
+        android:textColor="#000000"
+        android:layout_above="@+id/chooseName4"
+        android:layout_alignStart="@+id/chkEvalStudent" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grpEvalLang"
+        android:layout_above="@+id/view3"
+        android:layout_alignStart="@+id/lblEvalLang"
+        android:layout_marginStart="24dp">
+
+        <RadioButton
+            android:text="Java"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalLangJava"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/radEvalLangCPP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="C++" />
+
+        <RadioButton
+            android:text="LabView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radEvalLangLabview"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+    <TextView
+        android:text="Friendliness? (5 = best)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpEvalLang"
+        android:layout_alignStart="@+id/lblEvalLang"
+        android:id="@+id/lblEvalFriend"
+        android:textColor="#000000" />
+
+    <Button
+        android:text="-"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/lblTeleopNumberStore"
+        android:layout_alignStart="@+id/grpEvalLang"
+        android:id="@+id/btnEvalFriendSub" />
+
+    <EditText
+        android:id="@+id/txtTeleopFullTime"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/chkAutoGears"
+        android:layout_toEndOf="@+id/btnTeleopShootFullTimeSub"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2" />
+
+    <EditText
+        android:id="@+id/txtEvalFriend"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnEvalFriendSub"
+        android:layout_alignBottom="@+id/btnEvalFriendSub"
+        android:layout_toEndOf="@+id/btnEvalFriendSub"
+        android:background="#ffffff"
+        android:maxLength="1" />
+
+    <Button
+        android:id="@+id/btnEvalFriendAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/btnEvalFriendSub"
+        android:layout_toEndOf="@+id/txtEvalFriend"
+        android:text="+" />
+
+    <TextView
+        android:text="Description of the robot:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblEvalDescription"
+        android:textColor="#000000"
+        android:layout_below="@+id/btnEvalFriendSub"
+        android:layout_alignStart="@+id/lblEvalFriend" />
+
+    <EditText
+        android:id="@+id/txtEvalDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/lblEvalDescription"
+        android:layout_below="@+id/lblEvalDescription"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_alignBottom="@+id/lblTeleopClimbTime" />
+
+    <EditText
+        android:id="@+id/txtEvalComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/lblEvalComments"
+        android:layout_below="@+id/lblEvalComments"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_above="@+id/txtAutoStrategies" />
+
+    <TextView
+        android:id="@+id/lblEvalComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comments:"
+        android:textColor="#000000"
+        android:layout_alignTop="@+id/txtTeleopClimbTime"
+        android:layout_alignStart="@+id/txtEvalDescription" />
+
+    <ImageView
+        android:id="@+id/imgMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/view"
+        android:layout_toStartOf="@+id/view2"
+        android:src="@drawable/strongholdfield"
+        android:layout_below="@+id/chkAutoStartingPositionRight" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtEvalComments"
+        android:layout_below="@+id/lblFormsPending"
+        android:text="save form" />
+
+    <Button
+        android:id="@+id/btnTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnSave"
+        android:layout_alignParentEnd="true"
+        android:text="transfer" />
+
+
+</RelativeLayout>
